@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services | Fracisdaris Logistic Ltd</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    
+    <style>
+        :root {
+            --primary-wine: #800020;
+            --accent-red: #a30029;
+            --glass-bg: rgba(255, 255, 255, 0.9);
+            --glass-border: rgba(128, 0, 32, 0.2);
+            --text-dark: #2d2d2d;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fcfcfc;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* Nav Styling (Uniform) */
+        .glass-nav {
+            background: #ffffff;
+            border-bottom: 3px solid var(--primary-wine);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar-brand { color: var(--text-dark) !important; }
+        .nav-link { color: var(--text-dark); }
+        .nav-link:hover { color: var(--primary-wine) !important; }
+        .nav-link.active { color: var(--primary-wine) !important; font-weight: 600; }
+
+        /* Hero Header */
+        .services-hero {
+            background: linear-gradient(rgba(128, 0, 32, 0.8), rgba(0, 0, 0, 0.8)), 
+                        url('images/2151998729.jpg');
+            background-size: cover;
+            background-position: center;
+            padding: 100px 0;
+            color: white;
+            text-align: center;
+        }
+
+        .btn-wine {
+            background: var(--primary-wine);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            border: none;
+            transition: 0.3s;
+        }
+
+        .btn-wine:hover {
+            background: var(--accent-red);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .btn-glass {
+            background: var(--primary-wine);
+            border: 1px solid var(--primary-wine);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .btn-glass:hover {
+            background: white;
+            color: var(--primary-wine);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(128, 0, 32, 0.2);
+            border-color: white;
+        }
+
+        /* Service Section Styling */
+        .service-item {
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
+            overflow: hidden;
+        }
+
+        .service-item img {
+            width: 100%;
+            height: 300px; /* Fixed height for consistency */
+            object-fit: cover;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .service-content {
+            padding: 30px;
+        }
+
+        .service-content h3 {
+            color: var(--primary-wine);
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .service-content p {
+            color: var(--text-dark);
+            line-height: 1.7;
+        }
+
+        /* Call to Action Section */
+        .cta-section {
+            background-color: var(--primary-wine);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            margin-top: 50px;
+            border-radius: 20px;
+        }
+
+        /* Footer (Exact copy of Home) */
+        footer {
+            background: var(--primary-wine);
+            color: #ffffff;
+            padding: 80px 0 30px 0;
+            margin-top: 50px;
+        }
+
+        .footer-map-container {
+            border-radius: 15px;
+            overflow: hidden;
+            border: 2px solid rgba(255,255,255,0.2);
+            height: 200px;
+        }
+
+        .footer-link {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .footer-link:hover {
+            color: #ffffff;
+            padding-left: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg glass-nav">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="home.html">
+                <i class="bi bi-box-seam me-2" style="color: var(--primary-wine);"></i>FRACISDARIS LOGISTIC LTD
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="home.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="services.html">Services</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about_us.html">About Us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link btn btn-glass ms-lg-3 text-white" href="login.html">Client Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header class="services-hero">
+        <div class="container" data-aos="zoom-in">
+            <h1 class="display-4 fw-bold">Our Comprehensive Logistics Services</h1>
+            <p class="lead fs-4">Simplifying your supply chain from storage to final delivery and payment collection.</p>
+        </div>
+    </header>
+
+    <section class="py-5">
+        <div class="container">
+            <div class="text-center mb-5" data-aos="fade-up">
+                <h2 class="fw-bold" style="color: var(--primary-wine);">What We Offer</h2>
+                <p class="lead">Partner with us for reliable and efficient handling of your goods.</p>
+                <div class="mx-auto bg-danger" style="height: 3px; width: 60px;"></div>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-lg-6" data-aos="fade-right" data-aos-delay="100">
+                    <div class="service-item">
+                         <img src="images/2151468934.jpg" alt="Secure Warehouse Storage Facility">
+                        <div class="service-content">
+                            <h3><i class="bi bi-shield-check me-2"></i>Free Secured Storage</h3>
+                            <p>Protect your valuable inventory in our state-of-the-art, high-security warehouse facilities. We offer complimentary, climate-controlled storage solutions designed to keep your products safe from damage, theft, and environmental factors. Our 24/7 surveillance, restricted access, and advanced inventory management systems ensure peace of mind, allowing you to focus on your core business without the burden of storage costs or risks.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6" data-aos="fade-left" data-aos-delay="200">
+                    <div class="service-item">
+                         <img src="images/77653.jpg" alt="Professional Product Packaging">
+                        <div class="service-content">
+                            <h3><i class="bi bi-box-seam me-2"></i>Professional Packaging</h3>
+                            <p>First impressions matter. Our expert team ensures that every item is meticulously packaged using high-quality materials, tailored to the specific needs of your product. From fragile goods requiring extra cushioning to efficient bulk packaging, we prioritize secure transit and pristine presentation. Professional packaging not only safeguards your goods but also enhances your brand's reputation with every delivery.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6" data-aos="fade-right" data-aos-delay="300">
+                    <div class="service-item">
+                         <img src="images/4279.jpg" alt="Fast Delivery Van">
+                        <div class="service-content">
+                            <h3><i class="bi bi-truck me-2"></i>Delivery on Order</h3>
+                            <p>Speed and reliability are at the core of our delivery services. Once an order is placed, our efficient system ensures prompt processing and dispatch. We manage the entire delivery logistics, guaranteeing that your products reach your customers quickly and in perfect condition. Our optimized routes and dedicated fleet mean timely deliveries that boost customer satisfaction and loyalty.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6" data-aos="fade-left" data-aos-delay="400">
+                    <div class="service-item">
+                         <img src="images/81533.jpg" alt="Cash Payment Handover">
+                        <div class="service-content">
+                            <h3><i class="bi bi-cash-stack me-2"></i>Payment Collection on Your Behalf</h3>
+                            <p>Simplify your sales process with our secure payment collection service. We handle "Payment on Delivery" (POD) transactions, collecting cash directly from your customers at the point of delivery. This service minimizes your financial risk, broadens your customer base by offering flexible payment options, and ensures prompt remittance of funds directly to you, making your business operations smoother and more profitable.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container" data-aos="zoom-in">
+            <h2 class="display-5 fw-bold mb-4">Ready to Elevate Your Logistics?</h2>
+            <p class="lead mb-5">Experience seamless operations and satisfied customers with Fracisdaris Logistic Ltd.</p>
+            <a href="contact.html" class="btn btn-outline-light btn-lg rounded-pill">Get Your Custom Quote Today</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-lg-3 col-md-6" data-aos="fade-up">
+                    <h4 class="fw-bold mb-4 text-uppercase">Fracisdaris Logistic Ltd</h4>
+                    <p style="color: rgba(255,255,255,0.7)">Providing world-class warehouse and distribution solutions since 2010. Excellence in motion.</p>
+                    <div class="mt-4">
+                        <a href="#" class="text-white me-3 fs-5"><i class="bi bi-linkedin"></i></a>
+                        <a href="#" class="text-white me-3 fs-5"><i class="bi bi-twitter-x"></i></a>
+                        <a href="#" class="text-white fs-5"><i class="bi bi-facebook"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                    <h5 class="fw-bold mb-4">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="home.html" class="footer-link">Home</a></li>
+                        <li class="mb-2"><a href="services.html" class="footer-link">Our Services</a></li>
+                        <li class="mb-2"><a href="about_us.html" class="footer-link">About Us</a></li>
+                        <li class="mb-2"><a href="contact.html" class="footer-link">Contact</a></li>
+                        <li class="mb-2"><a href="login.html" class="footer-link">Client Portal</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                    <h5 class="fw-bold mb-4">Contact Details</h5>
+                    <p class="mb-3"><i class="bi bi-geo-alt-fill me-2"></i> Shop 6 blue plaza, Lagos, Nigeria.</p>
+                    <p class="mb-3"><i class="bi bi-telephone-fill me-2"></i> 07015541128</p>
+                    <p class="mb-4"><i class="bi bi-envelope-fill me-2"></i> okaroonyeka@gmail.com</p>
+                    <a href="contact.html" class="btn btn-outline-light w-100 rounded-pill">Request a Quote</a>
+                </div>
+
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                    <h5 class="fw-bold mb-4">Our Location</h5>
+                    <div class="footer-map-container">
+                        <iframe width="100%" height="100%" frameborder="0" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3964.502476579227!2d3.2201386!3d6.4578491!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103b86927d73010b%3A0xe5a31a9860b0ec8!2sBlue%20Plaza!5e0!3m2!1sen!2sng!4v1700000000000" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-5 opacity-25">
+            <div class="text-center" style="color: rgba(255,255,255,0.7)">
+                <p class="mb-0">© 2026 Fracisdaris Logistic Ltd. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>AOS.init({ duration: 1000, once: true });</script>
+</body>
+</html>

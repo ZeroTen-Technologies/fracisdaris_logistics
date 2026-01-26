@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Client Portal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    
+    <style>
+        :root {
+            --primary-wine: #800020;
+            --accent-red: #a30029;
+            --sidebar-width: 260px;
+            --bg-light: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-light);
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            width: var(--sidebar-width);
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            background-color: var(--primary-wine);
+            color: white;
+            padding-top: 20px;
+            z-index: 1000;
+            transition: all 0.3s;
+        }
+
+        .sidebar-brand {
+            padding: 0 20px 30px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .nav-link {
+            color: rgba(255,255,255,0.8);
+            padding: 12px 25px;
+            display: flex;
+            align-items: center;
+            transition: 0.3s;
+            border-left: 4px solid transparent;
+        }
+
+        .nav-link i { margin-right: 15px; font-size: 1.2rem; }
+
+        .nav-link:hover, .nav-link.active {
+            color: white;
+            background: rgba(255,255,255,0.1);
+            border-left: 4px solid white;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            padding: 30px;
+        }
+
+        .top-nav {
+            background: white;
+            padding: 15px 30px;
+            margin: -30px -30px 30px -30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .metric-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            border: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: 0.3s;
+        }
+
+        .metric-card:hover { transform: translateY(-5px); }
+
+        .metric-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(128, 0, 32, 0.1);
+            color: var(--primary-wine);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .btn-wine {
+            background: var(--primary-wine);
+            color: white;
+            border: none;
+        }
+
+        .btn-wine:hover {
+            background: var(--accent-red);
+            color: white;
+        }
+
+        .alert-low-stock {
+            border-left: 5px solid #ffc107;
+            background: white;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="sidebar-brand text-uppercase">
+            <i class="bi bi-box-seam me-2"></i> Fracisdaris
+        </div>
+        <nav class="nav flex-column">
+            <a class="nav-link active" href="dashboard.html"><i class="bi bi-speedometer2"></i> Overview</a>
+            <a class="nav-link" href="inventory.html"><i class="bi bi-archive"></i> Inventory</a>
+            <a class="nav-link" href="orders.html"><i class="bi bi-truck"></i> Orders</a>
+            <a class="nav-link" href="reports.html"><i class="bi bi-bar-chart"></i> Reports</a>
+            <a class="nav-link" href="billing.html"><i class="bi bi-credit-card"></i> Billing</a>
+            <hr class="mx-3 opacity-25">
+            <a class="nav-link" href="account.html"><i class="bi bi-person-gear"></i> Account</a>
+            <a class="nav-link" href="support.html"><i class="bi bi-headset"></i> Support</a>
+            <a class="nav-link text-danger mt-5" href="login.html"><i class="bi bi-box-arrow-left"></i> Logout</a>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        <div class="top-nav">
+            <div class="search-bar w-50">
+                <div class="input-group">
+                    <span class="input-group-text bg-light border-0"><i class="bi bi-search"></i></span>
+                    <input type="text" class="form-control bg-light border-0" placeholder="Search orders or SKUs...">
+                </div>
+            </div>
+            <div class="user-profile d-flex align-items-center">
+                <div class="dropdown">
+                    <button class="btn border-0 dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        <i class="bi bi-bell me-3 position-relative">
+                            <span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle"></span>
+                        </i>
+                        <strong>John Doe</strong>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end shadow border-0">
+                        <li><a class="dropdown-item" href="account.html">Profile</a></li>
+                        <li><a class="dropdown-item text-danger" href="login.html">Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="fw-bold mb-4">Dashboard Overview</h3>
+
+        <div class="row g-4 mb-5">
+            <div class="col-md-3">
+                <div class="metric-card">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <p class="text-muted small mb-1">Total SKUs</p>
+                            <h3 class="fw-bold">142</h3>
+                        </div>
+                        <div class="metric-icon"><i class="bi bi-tags"></i></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="metric-card">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <p class="text-muted small mb-1">Stock Value</p>
+                            <h3 class="fw-bold">₦4.2M</h3>
+                        </div>
+                        <div class="metric-icon"><i class="bi bi-currency-exchange"></i></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="metric-card">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <p class="text-muted small mb-1">Orders Shipped</p>
+                            <h3 class="fw-bold">18 Today</h3>
+                        </div>
+                        <div class="metric-icon"><i class="bi bi-check-circle"></i></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="metric-card border-start border-danger border-4">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <p class="text-muted small mb-1">Pending Orders</p>
+                            <h3 class="fw-bold">07</h3>
+                        </div>
+                        <div class="metric-icon text-danger"><i class="bi bi-hourglass-split"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-lg-8">
+                <div class="card border-0 shadow-sm p-4 rounded-4 mb-4">
+                    <h5 class="fw-bold mb-4">Recent Activity Feed</h5>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Activity</th>
+                                    <th>Status</th>
+                                    <th>Time</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><i class="bi bi-truck me-2 text-primary"></i> Shipment #FD-9921 Delivered</td>
+                                    <td><span class="badge bg-success">Success</span></td>
+                                    <td class="small text-muted">2 mins ago</td>
+                                </tr>
+                                <tr>
+                                    <td><i class="bi bi-plus-circle me-2 text-success"></i> New stock received for SKU: WN-22</td>
+                                    <td><span class="badge bg-info">Stock In</span></td>
+                                    <td class="small text-muted">1 hour ago</td>
+                                </tr>
+                                <tr>
+                                    <td><i class="bi bi-exclamation-triangle me-2 text-warning"></i> Shipment exception #FD-9900</td>
+                                    <td><span class="badge bg-warning">Review</span></td>
+                                    <td class="small text-muted">3 hours ago</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card border-0 shadow-sm p-4 rounded-4">
+                    <h5 class="fw-bold mb-3">Warehouse KPIs</h5>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="small fw-bold">Storage Capacity Used (85%)</label>
+                            <div class="progress mt-2" style="height: 10px;">
+                                <div class="progress-bar bg-danger" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="small fw-bold">Order Accuracy Rate (99.2%)</label>
+                            <div class="progress mt-2" style="height: 10px;">
+                                <div class="progress-bar bg-success" style="width: 99%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="card border-0 shadow-sm p-4 rounded-4">
+                    <h5 class="fw-bold mb-4">Alerts & Notifications</h5>
+                    <div class="alert alert-low-stock shadow-sm p-3 mb-3">
+                        <div class="d-flex">
+                            <i class="bi bi-exclamation-octagon-fill text-warning me-3 fs-4"></i>
+                            <div>
+                                <h6 class="mb-1 fw-bold">Low Stock Alert</h6>
+                                <p class="small mb-0 text-muted">SKU: XYZ-Premium has dropped below 10 units.</p>
+                                <button class="btn btn-sm btn-outline-danger mt-2" data-bs-toggle="modal" data-bs-target="#restockModal">Restock Now</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="alert bg-light p-3 border-0">
+                        <div class="d-flex">
+                            <i class="bi bi-info-circle-fill text-primary me-3 fs-4"></i>
+                            <div>
+                                <h6 class="mb-1 fw-bold">Billing Due</h6>
+                                <p class="small mb-0 text-muted">Monthly storage fee for January is ready.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="restockModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 rounded-4">
+                <div class="modal-header bg-danger text-white border-0">
+                    <h5 class="modal-title">Request Restock</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <p>Use our <strong>Lagos Branch</strong> service to send new stock from motor parks or shipping warehouses.</p>
+                    <div class="mb-3">
+                        <label class="form-label small">Pickup Location (Motor Park/Warehouse)</label>
+                        <input type="text" class="form-control" placeholder="e.g. Young Shall Grow, Jibowu">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small">Estimated Quantity</label>
+                        <input type="number" class="form-control">
+                    </div>
+                    <button class="btn btn-wine w-100">Send Pickup Request</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Admin | Fracisdaris Logistics</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        :root { 
+            --admin-navy: #1a1a2e; 
+            --primary-wine: #800020;
+            --sidebar-width: 260px; 
+            --bg-light: #f4f7f6;
+        }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-light); }
+
+        /* SCROLLABLE STAFF SIDEBAR */
+        .sidebar { 
+            width: var(--sidebar-width); 
+            height: 100vh; 
+            position: fixed; 
+            left: 0; 
+            top: 0; 
+            background-color: var(--admin-navy); 
+            color: white; 
+            padding-top: 20px; 
+            z-index: 1000; 
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar::-webkit-scrollbar { width: 5px; }
+        .sidebar::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); }
+        .sidebar::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); border-radius: 10px; }
+
+        .sidebar-brand {
+            padding: 0 20px 20px;
+            font-weight: 700;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            flex-shrink: 0;
+        }
+        .nav-link { 
+            color: rgba(255,255,255,0.7); 
+            padding: 10px 25px; 
+            display: flex; 
+            align-items: center; 
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        .nav-link i { margin-right: 12px; font-size: 1.1rem; }
+        .nav-link:hover, .nav-link.active { 
+            color: white; 
+            background: rgba(255,255,255,0.05); 
+            border-right: 4px solid var(--primary-wine); 
+        }
+        .section-label {
+            padding: 20px 25px 10px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.4);
+            letter-spacing: 1px;
+        }
+
+        .main-content { margin-left: var(--sidebar-width); padding: 30px; }
+        .btn-wine { background: var(--primary-wine); color: white; border: none; }
+        .btn-wine:hover { background: #600018; color: white; }
+        
+        .admin-card { border: none; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .log-entry { font-family: 'Courier New', monospace; font-size: 0.8rem; border-left: 3px solid #ddd; padding-left: 10px; margin-bottom: 8px; }
+        
+        /* Dropdown styling adjustment */
+        .dropdown-menu { border: none; box-shadow: 0 5px 15px rgba(0,0,0,0.1); font-size: 0.85rem; }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="sidebar-brand text-uppercase d-flex align-items-center">
+            <i class="bi bi-shield-lock-fill me-2 text-danger"></i> FRACISDARIS STAFF
+        </div>
+        <nav class="nav flex-column">
+            <a class="nav-link" href="staff_dashboard.html"><i class="bi bi-grid-1x2"></i> Facility Health</a>
+            <a class="nav-link" href="client_management.html"><i class="bi bi-people"></i> Client Management</a>
+            
+            <div class="section-label">WAREHOUSE OPS</div>
+            <a class="nav-link" href="warehouse_operations.html"><i class="bi bi-boxes"></i> Ops Overview</a>
+            <a class="nav-link" href="receiving.html"><i class="bi bi-box-arrow-in-right"></i> Receiving (Inbound)</a>
+            <a class="nav-link" href="putaway.html"><i class="bi bi-geo-alt"></i> Put-away</a>
+            <a class="nav-link" href="picking.html"><i class="bi bi-list-check"></i> Picking & Packing</a>
+            <a class="nav-link" href="shipping.html"><i class="bi bi-truck-flatbed"></i> Shipping (Outbound)</a>
+
+            <div class="section-label">ADMINISTRATION</div>
+            <a class="nav-link" href="reports_advanced.html"><i class="bi bi-graph-up-arrow"></i> Advanced Reports</a>
+            <a class="nav-link" href="staff_performance.html"><i class="bi bi-person-badge"></i> Staff Performance</a>
+            <a class="nav-link active" href="system_admin.html"><i class="bi bi-gear-fill"></i> System Administration</a>
+            
+            <hr class="mx-3 opacity-25">
+            <a class="nav-link text-danger mb-4" href="login.html"><i class="bi bi-power"></i> System Logout</a>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h3 class="fw-bold mb-0">System Administration</h3>
+                <p class="text-muted">Global configuration and security controls</p>
+            </div>
+            <div class="badge bg-danger-subtle text-danger p-2">
+                <i class="bi bi-shield-check me-1"></i> Root Admin Level
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-8">
+                <div class="card admin-card p-4 bg-white mb-4">
+                    <div class="d-flex justify-content-between mb-4">
+                        <h5 class="fw-bold">User Access Control</h5>
+                        <button class="btn btn-sm btn-wine" data-bs-toggle="modal" data-bs-target="#inviteUserModal">
+                            <i class="bi bi-plus"></i> New User
+                        </button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>User</th>
+                                    <th>Role</th>
+                                    <th>Last Login</th>
+                                    <th>MFA</th>
+                                    <th class="text-end">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>admin@fracisdaris.com</strong></td>
+                                    <td><span class="badge bg-dark">Super Admin</span></td>
+                                    <td class="small">2 mins ago</td>
+                                    <td><i class="bi bi-check-circle-fill text-success"></i></td>
+                                    <td class="text-end">
+                                        <div class="dropdown">
+                                            <button class="btn btn-link text-dark p-0" data-bs-toggle="dropdown">
+                                                <i class="bi bi-three-dots-vertical"></i>
+                                            </button>
+                                            <ul class="dropdown-menu dropdown-menu-end">
+                                                <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#editRoleModal"><i class="bi bi-pencil-square me-2"></i>Edit Role</a></li>
+                                                <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#resetPasswordModal"><i class="bi bi-key me-2"></i>Reset Password</a></li>
+                                                <li><hr class="dropdown-divider"></li>
+                                                <li><a class="dropdown-item text-danger" href="#" data-bs-toggle="modal" data-bs-target="#deactivateModal"><i class="bi bi-person-x me-2"></i>Deactivate User</a></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>manager_lagos@fracisdaris.com</strong></td>
+                                    <td><span class="badge bg-secondary">Staff Manager</span></td>
+                                    <td class="small">3 hrs ago</td>
+                                    <td><i class="bi bi-check-circle-fill text-success"></i></td>
+                                    <td class="text-end">
+                                        <div class="dropdown">
+                                            <button class="btn btn-link text-dark p-0" data-bs-toggle="dropdown">
+                                                <i class="bi bi-three-dots-vertical"></i>
+                                            </button>
+                                            <ul class="dropdown-menu dropdown-menu-end">
+                                                <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#editRoleModal"><i class="bi bi-pencil-square me-2"></i>Edit Role</a></li>
+                                                <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#resetPasswordModal"><i class="bi bi-key me-2"></i>Reset Password</a></li>
+                                                <li><hr class="dropdown-divider"></li>
+                                                <li><a class="dropdown-item text-danger" href="#" data-bs-toggle="modal" data-bs-target="#deactivateModal"><i class="bi bi-person-x me-2"></i>Deactivate User</a></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>warehouse_floor_1@fracisdaris.com</strong></td>
+                                    <td><span class="badge bg-light text-dark">Warehouse Staff</span></td>
+                                    <td class="small">Yesterday</td>
+                                    <td><i class="bi bi-x-circle-fill text-danger"></i></td>
+                                    <td class="text-end">
+                                        <div class="dropdown">
+                                            <button class="btn btn-link text-dark p-0" data-bs-toggle="dropdown">
+                                                <i class="bi bi-three-dots-vertical"></i>
+                                            </button>
+                                            <ul class="dropdown-menu dropdown-menu-end">
+                                                <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#editRoleModal"><i class="bi bi-pencil-square me-2"></i>Edit Role</a></li>
+                                                <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#resetPasswordModal"><i class="bi bi-key me-2"></i>Reset Password</a></li>
+                                                <li><hr class="dropdown-divider"></li>
+                                                <li><a class="dropdown-item text-danger" href="#" data-bs-toggle="modal" data-bs-target="#deactivateModal"><i class="bi bi-person-x me-2"></i>Deactivate User</a></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card admin-card p-4 bg-white">
+                    <h5 class="fw-bold mb-3 text-danger">Security Audit Logs</h5>
+                    <div class="bg-light p-3 rounded-3" style="max-height: 200px; overflow-y: auto;">
+                        <div class="log-entry"><strong>[2024-05-20 14:22]</strong> USER_LOGIN: admin@fracisdaris.com from IP 192.168.1.1</div>
+                        <div class="log-entry"><strong>[2024-05-20 13:05]</strong> PASSWORD_CHANGE: warehouse_floor_1 requested reset.</div>
+                        <div class="log-entry" style="border-left-color: #dc3545;"><strong>[2024-05-20 12:40]</strong> FAILED_LOGIN: unauthorized attempt on 'root' account.</div>
+                        <div class="log-entry"><strong>[2024-05-20 11:15]</strong> PERMISSION_CHANGE: Client 'TechStore' moved to 'Active'.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card admin-card p-4 bg-white">
+                    <h5 class="fw-bold mb-4">Platform Settings</h5>
+                    
+                    <div class="mb-4">
+                        <label class="form-label small fw-bold">Maintenance Mode</label>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" role="switch">
+                            <span class="small text-muted">Offline for all clients</span>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label small fw-bold">Default Currency</label>
+                        <select class="form-select form-select-sm">
+                            <option>NGN (₦) - Nigerian Naira</option>
+                            <option>USD ($) - US Dollar</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label small fw-bold">API Access Tokens</label>
+                        <button class="btn btn-sm btn-outline-dark w-100">Rotate System Keys</button>
+                    </div>
+
+                    <hr>
+                    
+                    <h6 class="fw-bold small mb-3">Backup & Recovery</h6>
+                    <button class="btn btn-sm btn-outline-primary w-100 mb-2">Download DB Backup</button>
+                    <button class="btn btn-sm btn-outline-danger w-100">Wipe Staging Data</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="inviteUserModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content p-4 rounded-4 border-0 shadow">
+                <div class="modal-header border-0 p-0 mb-4">
+                    <h5 class="fw-bold">Invite System User</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <div class="mb-3">
+                        <label class="small fw-bold">User Email</label>
+                        <input type="email" class="form-control" placeholder="staff@fracisdaris.com">
+                    </div>
+                    <div class="mb-3">
+                        <label class="small fw-bold">Assign Role</label>
+                        <select class="form-select">
+                            <option>Warehouse Staff (Ops Only)</option>
+                            <option>Staff Manager (Reports + Ops)</option>
+                            <option>Finance (Billing Only)</option>
+                            <option>Super Admin (All Access)</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-wine w-100">Send Invite</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editRoleModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content p-4 rounded-4 border-0 shadow">
+                <div class="modal-header border-0 p-0 mb-3">
+                    <h5 class="fw-bold">Modify User Role</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <p class="text-muted small">Update permissions for this user.</p>
+                    <div class="mb-3">
+                        <label class="small fw-bold">Selected User</label>
+                        <input type="text" class="form-control bg-light" value="manager_lagos@fracisdaris.com" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label class="small fw-bold">New Permissions Tier</label>
+                        <select class="form-select">
+                            <option>Super Admin</option>
+                            <option selected>Staff Manager</option>
+                            <option>Warehouse Staff</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-wine w-100">Update Permissions</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="resetPasswordModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content p-4 rounded-4 border-0 shadow">
+                <div class="modal-header border-0 p-0 mb-3">
+                    <h5 class="fw-bold">System Password Reset</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-0 text-center">
+                    <i class="bi bi-shield-lock text-warning fs-1 mb-3 d-block"></i>
+                    <p>Are you sure you want to trigger a password reset for this user? They will be logged out of all active sessions.</p>
+                    <button class="btn btn-wine w-100">Send Reset Link</button>
+                    <button class="btn btn-link text-muted w-100 mt-2 small text-decoration-none" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="deactivateModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content p-4 rounded-4 border-0 shadow">
+                <div class="modal-header border-0 p-0 mb-3 text-danger">
+                    <h5 class="fw-bold">Deactivate Account</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <div class="alert alert-danger small">
+                        <strong>Warning:</strong> Deactivating this user will revoke all warehouse access immediately.
+                    </div>
+                    <p class="small">Reason for deactivation:</p>
+                    <textarea class="form-control mb-3" rows="2" placeholder="e.g., Staff resignation, security breach..."></textarea>
+                    <button class="btn btn-danger w-100">Confirm Deactivation</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

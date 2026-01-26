@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Management | Fracisdaris Staff</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        :root { 
+            --admin-navy: #1a1a2e; 
+            --primary-wine: #800020;
+            --sidebar-width: 260px; 
+            --bg-light: #f4f7f6;
+        }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-light); }
+
+        /* UNIFORM STAFF SIDEBAR */
+        .sidebar { 
+            width: var(--sidebar-width); 
+            height: 100vh; 
+            position: fixed; 
+            left: 0; 
+            top: 0; 
+            background-color: var(--admin-navy); 
+            color: white; 
+            padding-top: 20px; 
+            z-index: 1000; 
+        }
+        .sidebar-brand {
+            padding: 0 20px 20px;
+            font-weight: 700;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .nav-link { 
+            color: rgba(255,255,255,0.7); 
+            padding: 10px 25px; 
+            display: flex; 
+            align-items: center; 
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        .nav-link i { margin-right: 12px; font-size: 1.1rem; }
+        .nav-link:hover, .nav-link.active { 
+            color: white; 
+            background: rgba(255,255,255,0.05); 
+            border-right: 4px solid var(--primary-wine); 
+        }
+        .section-label {
+            padding: 20px 25px 10px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.4);
+            letter-spacing: 1px;
+        }
+
+        .main-content { margin-left: var(--sidebar-width); padding: 30px; }
+        .btn-wine { background: var(--primary-wine); color: white; border: none; }
+        .btn-wine:hover { background: #a30029; color: white; }
+
+        .client-card { border: none; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: 0.3s; }
+        .client-card:hover { transform: translateY(-5px); }
+        .status-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; margin-right: 5px; }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="sidebar-brand text-uppercase d-flex align-items-center">
+            <i class="bi bi-shield-lock-fill me-2 text-danger"></i> FRACISDARIS STAFF
+        </div>
+        <nav class="nav flex-column">
+            <a class="nav-link" href="staff_dashboard.html"><i class="bi bi-grid-1x2"></i> Facility Health</a>
+            <a class="nav-link active" href="client_management.html"><i class="bi bi-people"></i> Client Management</a>
+            
+            <div class="section-label">WAREHOUSE OPS</div>
+            <a class="nav-link" href="warehouse_operations.html"><i class="bi bi-boxes"></i> Ops Overview</a>
+            <a class="nav-link" href="receiving.html"><i class="bi bi-box-arrow-in-right"></i> Receiving (Inbound)</a>
+            <a class="nav-link" href="putaway.html"><i class="bi bi-geo-alt"></i> Put-away</a>
+            <a class="nav-link" href="picking.html"><i class="bi bi-list-check"></i> Picking & Packing</a>
+            <a class="nav-link" href="shipping.html"><i class="bi bi-truck-flatbed"></i> Shipping (Outbound)</a>
+
+            <div class="section-label">ADMINISTRATION</div>
+            <a class="nav-link" href="reports_advanced.html"><i class="bi bi-graph-up-arrow"></i> Advanced Reports</a>
+            <a class="nav-link" href="staff_performance.html"><i class="bi bi-person-badge"></i> Staff Performance</a>
+            <hr class="mx-3 opacity-25">
+            <a class="nav-link text-danger" href="login.html"><i class="bi bi-power"></i> System Logout</a>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h3 class="fw-bold mb-0">Client Portfolio</h3>
+                <p class="text-muted">Manage accounts, billing, and storage agreements</p>
+            </div>
+            <button class="btn btn-wine px-4" data-bs-toggle="modal" data-bs-target="#addClientModal">
+                <i class="bi bi-person-plus-fill me-2"></i>Onboard New Client
+            </button>
+        </div>
+
+        <div class="card border-0 shadow-sm p-3 mb-4 rounded-4 bg-white">
+            <div class="row g-3">
+                <div class="col-md-8">
+                    <div class="input-group">
+                        <span class="input-group-text bg-light border-0"><i class="bi bi-search"></i></span>
+                        <input type="text" id="clientSearch" class="form-control bg-light border-0" placeholder="Search by Client Name, ID, or Category...">
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <select id="statusFilter" class="form-select border-0 bg-light">
+                        <option value="all">All Statuses</option>
+                        <option value="Paid">Active (Paid)</option>
+                        <option value="Overdue">Overdue</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-outline-dark w-100 border-0 bg-light">Filters</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card border-0 shadow-sm rounded-4 bg-white overflow-hidden">
+            <div class="table-responsive">
+                <table class="table align-middle mb-0" id="clientTable">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="ps-4">Client Name</th>
+                            <th>Storage Plan</th>
+                            <th>Current Inventory</th>
+                            <th>Billing Status</th>
+                            <th>Account Health</th>
+                            <th class="text-end pe-4">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="client-row">
+                            <td class="ps-4">
+                                <div class="d-flex align-items-center">
+                                    <div class="bg-primary-subtle text-primary fw-bold rounded p-2 me-3">TS</div>
+                                    <div>
+                                        <h6 class="mb-0 fw-bold client-name">TechStore Nigeria</h6>
+                                        <small class="text-muted">ID: #CLI-8820</small>
+                                    </div>
+                                </div>
+                            </td>
+                            <td><span class="small">High-Value Secure</span></td>
+                            <td><strong>2,450 SKUs</strong></td>
+                            <td><span class="badge bg-success-subtle text-success billing-status">Paid</span></td>
+                            <td>
+                                <div class="progress" style="height: 5px; width: 100px;">
+                                    <div class="progress-bar bg-success" style="width: 95%"></div>
+                                </div>
+                            </td>
+                            <td class="text-end pe-4">
+                                <button class="btn btn-sm btn-light border" title="View Data" data-bs-toggle="modal" data-bs-target="#viewClientModal"><i class="bi bi-eye"></i></button>
+                                <button class="btn btn-sm btn-light border" title="Edit Billing" data-bs-toggle="modal" data-bs-target="#editBillingModal"><i class="bi bi-credit-card"></i></button>
+                            </td>
+                        </tr>
+                        <tr class="client-row">
+                            <td class="ps-4">
+                                <div class="d-flex align-items-center">
+                                    <div class="bg-warning-subtle text-warning fw-bold rounded p-2 me-3">FH</div>
+                                    <div>
+                                        <h6 class="mb-0 fw-bold client-name">FashionHub</h6>
+                                        <small class="text-muted">ID: #CLI-9011</small>
+                                    </div>
+                                </div>
+                            </td>
+                            <td><span class="small">Standard Pallet</span></td>
+                            <td><strong>1,120 SKUs</strong></td>
+                            <td><span class="badge bg-danger-subtle text-danger billing-status">Overdue ₦450k</span></td>
+                            <td>
+                                <div class="progress" style="height: 5px; width: 100px;">
+                                    <div class="progress-bar bg-warning" style="width: 60%"></div>
+                                </div>
+                            </td>
+                            <td class="text-end pe-4">
+                                <button class="btn btn-sm btn-light border" data-bs-toggle="modal" data-bs-target="#viewClientModal"><i class="bi bi-eye"></i></button>
+                                <button class="btn btn-sm btn-danger text-white" data-bs-toggle="modal" data-bs-target="#accountWarningModal"><i class="bi bi-exclamation-octagon"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="addClientModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content p-4 rounded-4 border-0 shadow">
+                <div class="modal-header border-0 p-0 mb-4">
+                    <h5 class="fw-bold">Client Onboarding Wizard</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <form class="row g-3">
+                        <div class="col-md-6">
+                            <label class="small fw-bold">Business Name</label>
+                            <input type="text" class="form-control" placeholder="Legal Entity Name">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="small fw-bold">Primary Contact Email</label>
+                            <input type="email" class="form-control" placeholder="billing@client.com">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="small fw-bold">Storage Tier</label>
+                            <select class="form-select">
+                                <option>Standard Pallet (₦)</option>
+                                <option>Cold Storage (₦₦)</option>
+                                <option>Secure Vault (₦₦₦)</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="small fw-bold">Initial Deposit (₦)</label>
+                            <input type="number" class="form-control" placeholder="0.00">
+                        </div>
+                        <div class="col-12 mt-4">
+                            <div class="p-3 bg-light rounded-3 border-start border-4 border-wine">
+                                <h6 class="fw-bold mb-1" style="color: var(--primary-wine);">Contract Agreement</h6>
+                                <p class="small text-muted mb-0">By clicking "Finalize," an automated login invite will be sent to the client email provided.</p>
+                            </div>
+                        </div>
+                        <div class="col-12 mt-4">
+                            <button type="button" class="btn btn-wine w-100 py-2">Finalize Onboarding</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="viewClientModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content p-4 rounded-4 border-0 shadow">
+                <div class="modal-header border-0 p-0 mb-3">
+                    <h5 class="fw-bold">Client Overview</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <div class="text-center mb-4">
+                        <div class="display-6 fw-bold text-wine" style="color:var(--primary-wine)">88%</div>
+                        <small class="text-muted">Storage Utilization</small>
+                    </div>
+                    <ul class="list-group list-group-flush small">
+                        <li class="list-group-item d-flex justify-content-between px-0"><span>Last Inbound:</span> <strong>Jan 24, 2026</strong></li>
+                        <li class="list-group-item d-flex justify-content-between px-0"><span>Active Returns:</span> <strong>12 Units</strong></li>
+                        <li class="list-group-item d-flex justify-content-between px-0"><span>Account Manager:</span> <strong>Sarah K.</strong></li>
+                    </ul>
+                    <button class="btn btn-outline-dark w-100 mt-4" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editBillingModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content p-4 rounded-4 border-0 shadow">
+                <div class="modal-header border-0 p-0 mb-3">
+                    <h5 class="fw-bold">Billing & Invoicing</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <label class="small fw-bold">Credit Limit (₦)</label>
+                    <input type="text" class="form-control mb-3" value="5,000,000">
+                    <label class="small fw-bold">Billing Cycle</label>
+                    <select class="form-select mb-4">
+                        <option>Monthly - 1st of month</option>
+                        <option>Bi-Weekly</option>
+                        <option>Per Transaction</option>
+                    </select>
+                    <button class="btn btn-wine w-100 py-2">Update Billing Profile</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="accountWarningModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content p-4 rounded-4 border-0 shadow">
+                <div class="modal-body text-center">
+                    <i class="bi bi-exclamation-triangle display-4 text-danger mb-3"></i>
+                    <h5 class="fw-bold">Service Suspension Warning</h5>
+                    <p class="small text-muted">This account has an overdue balance of ₦450,000. Would you like to restrict outbound shipping for this client?</p>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-danger w-100 py-2">Restrict Account</button>
+                        <button class="btn btn-light border w-100" data-bs-dismiss="modal">Ignore</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // CLIENT FILTERING LOGIC
+        const searchInput = document.getElementById('clientSearch');
+        const statusFilter = document.getElementById('statusFilter');
+        const rows = document.querySelectorAll('.client-row');
+
+        function filterClients() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const statusValue = statusFilter.value;
+
+            rows.forEach(row => {
+                const clientName = row.querySelector('.client-name').textContent.toLowerCase();
+                const billingStatus = row.querySelector('.billing-status').textContent;
+                
+                const matchesSearch = clientName.includes(searchTerm);
+                const matchesStatus = (statusValue === 'all') || billingStatus.includes(statusValue);
+
+                if (matchesSearch && matchesStatus) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
+                }
+            });
+        }
+
+        searchInput.addEventListener('input', filterClients);
+        statusFilter.addEventListener('change', filterClients);
+    </script>
+</body>
+</html>

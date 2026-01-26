@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Login | Fracisdaris Logistic Ltd</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    
+    <style>
+        :root {
+            --primary-wine: #800020;
+            --accent-red: #a30029;
+            --text-dark: #2d2d2d;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Nav Styling */
+        .glass-nav {
+            background: #ffffff;
+            border-bottom: 3px solid var(--primary-wine);
+        }
+
+        .login-wrapper {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .login-card {
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 450px;
+            padding: 40px;
+            border-top: 6px solid var(--primary-wine);
+        }
+
+        .form-control {
+            border-radius: 10px;
+            padding: 12px 15px;
+        }
+
+        .btn-wine {
+            background: var(--primary-wine);
+            color: white;
+            border-radius: 10px;
+            padding: 12px;
+            font-weight: 600;
+            border: none;
+            transition: 0.3s;
+        }
+
+        .btn-wine:hover {
+            background: var(--accent-red);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Modal Styling */
+        .modal-content {
+            border-radius: 20px;
+            border: none;
+            overflow: hidden;
+        }
+        .modal-header {
+            background-color: var(--primary-wine);
+            color: white;
+            border-bottom: none;
+        }
+        .btn-close-white {
+            filter: invert(1) grayscale(100%) brightness(200%);
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg glass-nav">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="home.html">
+                <i class="bi bi-box-seam me-2" style="color: var(--primary-wine);"></i>FRACISDARIS LOGISTIC LTD
+            </a>
+        </div>
+    </nav>
+
+    <div class="login-wrapper">
+        <div class="login-card" data-aos="zoom-in">
+            <div class="text-center mb-4">
+                <h2 class="fw-bold" style="color: var(--primary-wine);">Client Login</h2>
+                <p class="text-muted small">Access your Lagos branch dashboard</p>
+            </div>
+            
+            <form>
+                <div class="mb-4">
+                    <label class="form-label fw-semibold small">Username or Email</label>
+                    <input type="email" class="form-control" placeholder="name@company.com" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-semibold small">Password</label>
+                    <input type="password" class="form-control" placeholder="••••••••" required>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="rememberMe">
+                        <label class="form-check-label small" for="rememberMe">Remember me</label>
+                    </div>
+                    <a href="#" class="small fw-bold text-decoration-none" style="color: var(--primary-wine);" data-bs-toggle="modal" data-bs-target="#resetPasswordModal">
+                        Forgot Password?
+                    </a>
+                </div>
+
+                <button type="submit" class="btn btn-wine w-100">Sign In</button>
+            </form>
+
+            <div class="mt-4 text-center">
+                <a href="home.html" class="text-muted small text-decoration-none"><i class="bi bi-house me-1"></i> Back to Home</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="resetPasswordModal" tabindex="-1" aria-labelledby="resetModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content shadow-lg">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="resetModalLabel">Reset Your Password</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <p class="text-secondary small mb-4">Enter the email address associated with your account and we'll send you a link to reset your password.</p>
+                    <form id="resetForm">
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold small">Registered Email Address</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0"><i class="bi bi-envelope"></i></span>
+                                <input type="email" class="form-control border-start-0" placeholder="your@email.com" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-wine w-100 py-2">Send Reset Link</button>
+                    </form>
+                </div>
+                <div class="modal-footer bg-light border-0 justify-content-center">
+                    <p class="mb-0 small text-muted">Remembered it? <a href="#" class="text-decoration-none fw-bold" style="color: var(--primary-wine);" data-bs-dismiss="modal">Go back to login</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="py-3 text-center border-top bg-white mt-auto">
+        <p class="mb-0 small text-muted">© 2026 Fracisdaris Logistic Ltd. All rights reserved.</p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 800, once: true });
+
+        // Simple feedback for the demo
+        document.getElementById('resetForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('A password reset link has been sent to your email.');
+            bootstrap.Modal.getInstance(document.getElementById('resetPasswordModal')).hide();
+        });
+    </script>
+</body>
+</html>

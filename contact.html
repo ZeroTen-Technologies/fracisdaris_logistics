@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | Fracisdaris Logistic Ltd</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    
+    <style>
+        :root {
+            --primary-wine: #800020; /* Dark Wine Red */
+            --accent-red: #a30029;
+            --glass-bg: rgba(255, 255, 255, 0.95);
+            --glass-border: rgba(128, 0, 32, 0.2);
+            --text-dark: #2d2d2d;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa; /* Clean White/Grey Background */
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* Nav Styling */
+        .glass-nav {
+            background: #ffffff;
+            border-bottom: 3px solid var(--primary-wine);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .navbar-brand { color: var(--text-dark) !important; }
+        .nav-link { color: var(--text-dark); }
+        .nav-link:hover { color: var(--primary-wine) !important; }
+        .nav-link.active { color: var(--primary-wine) !important; font-weight: 600; }
+
+        /* Red Glass Card */
+        .glass-card {
+            background: #ffffff;
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(128, 0, 32, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        /* Form Styling */
+        .form-control, .form-select {
+            background: #ffffff;
+            border: 1px solid #ced4da;
+            color: var(--text-dark);
+            border-radius: 10px;
+            padding: 12px;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-wine);
+            box-shadow: 0 0 0 0.25rem rgba(128, 0, 32, 0.1);
+        }
+
+        .btn-wine {
+            background: var(--primary-wine);
+            color: #ffffff;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: 0.3s;
+            border: none;
+        }
+
+        .btn-wine:hover {
+            background: var(--accent-red);
+            color: #ffffff;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(128, 0, 32, 0.2);
+        }
+
+         .btn-glass {
+            background: var(--primary-wine);
+            border: 1px solid var(--primary-wine);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .btn-glass:hover {
+            background: white;
+            color: var(--primary-wine);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(128, 0, 32, 0.2);
+            border-color: white;
+        }
+
+        .contact-icon {
+            font-size: 1.5rem;
+            color: var(--primary-wine);
+            margin-right: 15px;
+        }
+
+        .map-wrapper {
+            border-radius: 20px;
+            overflow: hidden;
+            border: 2px solid var(--primary-wine);
+            height: 100%;
+            min-height: 450px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary-wine);
+            color: #ffffff;
+            padding: 80px 0 30px 0;
+            margin-top: 50px;
+        }
+
+        footer .text-secondary {
+            color: rgba(255,255,255,0.7) !important;
+        }
+
+        .footer-link {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .footer-link:hover {
+            color: #ffffff;
+            padding-left: 5px;
+        }
+
+        .btn-outline-white {
+            border: 1px solid #ffffff;
+            color: #ffffff;
+            border-radius: 50px;
+            padding: 10px 20px;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-outline-white:hover {
+            background: #ffffff;
+            color: var(--primary-wine);
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg glass-nav">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="home.html">
+                <i class="bi bi-box-seam me-2" style="color: var(--primary-wine);"></i>FRACISDARIS LOGISTIC LTD
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="home.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about_us.html">About Us</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="contact.html">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link btn btn-glass ms-lg-3 text-white" href="login.html">Client Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container py-5 mt-5">
+        <div class="text-center mb-5" data-aos="fade-down">
+            <h1 class="display-4 fw-bold" style="color: var(--primary-wine);">Get In Touch</h1>
+            <p class="lead">Reliable logistics solutions, personalized for your business.</p>
+        </div>
+
+        <div class="row g-5">
+            <div class="col-lg-6" data-aos="fade-right">
+                <div class="glass-card p-4 p-md-5">
+                    <h3 class="mb-4" style="color: var(--primary-wine);">Request a Quote</h3>
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label fw-600">Full Name</label>
+                            <input type="text" class="form-control" placeholder="Enter your name">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-600">Email Address</label>
+                            <input type="email" class="form-control" placeholder="email@company.com">
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label fw-600">Message</label>
+                            <textarea class="form-control" rows="5" placeholder="Tell us about your logistics needs..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-wine w-100 py-3">Send Message</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-lg-6" data-aos="fade-left">
+                <div class="map-wrapper">
+                    <iframe 
+                        width="100%" 
+                        height="100%" 
+                        frameborder="0" 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3964.536767554378!2d3.2141543!3d6.4534443!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103b8655e0c5108b%3A0x86c71c4c9b986b!2sBlue%20Plaza!5e0!3m2!1sen!2sng!4v1700000000000" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="fw-bold mb-4 text-uppercase">Fracisdaris Logistic Ltd</h4>
+                    <p class="text-secondary">World-class warehouse and distribution solutions since 2010. Excellence in motion.</p>
+                </div>
+
+                <div class="col-lg-2 col-md-6">
+                    <h5 class="fw-bold mb-4">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="home.html" class="footer-link">Home</a></li>
+                        <li class="mb-2"><a href="services.html" class="footer-link">Services</a></li>
+                        <li class="mb-2"><a href="contact.html" class="footer-link">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="fw-bold mb-4">Contact Details</h5>
+                    <p class="mb-2 text-white"><i class="bi bi-geo-alt-fill me-2"></i> Shop 6 blue plaza, Lagos</p>
+                    <p class="mb-2 text-white"><i class="bi bi-telephone-fill me-2"></i> 07015541128</p>
+                    <p class="mb-4 text-white"><i class="bi bi-envelope-fill me-2"></i> okaroonyeka@gmail.com</p>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <h5 class="fw-bold mb-4">Our Location</h5>
+                    <div style="height: 150px; border-radius: 10px; overflow: hidden; border: 1px solid rgba(255,255,255,0.3);">
+                        <iframe width="100%" height="100%" frameborder="0" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3964.536767554378!2d3.2141543!3d6.4534443!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103b8655e0c5108b%3A0x86c71c4c9b986b!2sBlue%20Plaza!5e0!3m2!1sen!2sng!4v1700000000000"></iframe>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-5 opacity-25">
+            <p class="text-center text-secondary mb-0">© 2026 Fracisdaris Logistic Ltd. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>AOS.init({ duration: 1000, once: true });</script>
+</body>
+</html>

@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Reports | Fracisdaris Staff</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        :root { 
+            --admin-navy: #1a1a2e; 
+            --primary-wine: #800020;
+            --sidebar-width: 260px; 
+            --bg-light: #f4f7f6;
+        }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-light); }
+
+        /* UNIFORM STAFF SIDEBAR */
+        .sidebar { 
+            width: var(--sidebar-width); 
+            height: 100vh; 
+            position: fixed; 
+            left: 0; 
+            top: 0; 
+            background-color: var(--admin-navy); 
+            color: white; 
+            padding-top: 20px; 
+            z-index: 1000; 
+        }
+        .sidebar-brand {
+            padding: 0 20px 20px;
+            font-weight: 700;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .nav-link { 
+            color: rgba(255,255,255,0.7); 
+            padding: 10px 25px; 
+            display: flex; 
+            align-items: center; 
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        .nav-link i { margin-right: 12px; font-size: 1.1rem; }
+        .nav-link:hover, .nav-link.active { 
+            color: white; 
+            background: rgba(255,255,255,0.05); 
+            border-right: 4px solid var(--primary-wine); 
+        }
+        .section-label {
+            padding: 20px 25px 10px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.4);
+            letter-spacing: 1px;
+        }
+
+        .main-content { margin-left: var(--sidebar-width); padding: 30px; }
+        .btn-wine { background: var(--primary-wine); color: white; border: none; }
+        .btn-wine:hover { background: #a30029; color: white; }
+        
+        /* REPORT CARDS */
+        .report-card { border: none; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .chart-placeholder { height: 250px; background: #fdfdfd; border: 1px dashed #ddd; border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+        .trend-up { color: #198754; font-size: 0.8rem; }
+        .delinquent-row { border-left: 4px solid #dc3545; }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="sidebar-brand text-uppercase d-flex align-items-center">
+            <i class="bi bi-shield-lock-fill me-2 text-danger"></i> FRACISDARIS STAFF
+        </div>
+        <nav class="nav flex-column">
+            <a class="nav-link" href="staff_dashboard.html"><i class="bi bi-grid-1x2"></i> Facility Health</a>
+            <a class="nav-link" href="client_management.html"><i class="bi bi-people"></i> Client Management</a>
+            
+            <div class="section-label">WAREHOUSE OPS</div>
+            <a class="nav-link" href="warehouse_operations.html"><i class="bi bi-boxes"></i> Ops Overview</a>
+            <a class="nav-link" href="receiving.html"><i class="bi bi-box-arrow-in-right"></i> Receiving (Inbound)</a>
+            <a class="nav-link" href="putaway.html"><i class="bi bi-geo-alt"></i> Put-away</a>
+            <a class="nav-link" href="picking.html"><i class="bi bi-list-check"></i> Picking & Packing</a>
+            <a class="nav-link" href="shipping.html"><i class="bi bi-truck-flatbed"></i> Shipping (Outbound)</a>
+
+            <div class="section-label">ADMINISTRATION</div>
+            <a class="nav-link active" href="reports_advanced.html"><i class="bi bi-graph-up-arrow"></i> Advanced Reports</a>
+            <a class="nav-link" href="staff_performance.html"><i class="bi bi-person-badge"></i> Staff Performance</a>
+            <hr class="mx-3 opacity-25">
+            <a class="nav-link text-danger" href="login.html"><i class="bi bi-power"></i> System Logout</a>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h3 class="fw-bold mb-0">Advanced Analytics</h3>
+                <p class="text-muted">Strategic insights and facility performance</p>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-outline-dark"><i class="bi bi-calendar3 me-2"></i>Quarterly View</button>
+                <button class="btn btn-wine" data-bs-toggle="modal" data-bs-target="#exportModal"><i class="bi bi-download me-2"></i>Export Full Audit</button>
+            </div>
+        </div>
+
+        <div class="row g-4 mb-4">
+            <div class="col-md-8">
+                <div class="card report-card p-4 bg-white">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h5 class="fw-bold">Net Profit vs. Operational Cost</h5>
+                        <div class="text-end">
+                            <h4 class="fw-bold mb-0">₦18.4M</h4>
+                            <span class="trend-up"><i class="bi bi-caret-up-fill"></i> 12.5% vs last month</span>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-placeholder">
+                        <span class="text-muted">Interactive Revenue/Expense Area Chart</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card report-card p-4 bg-white h-100">
+                    <h5 class="fw-bold mb-4">Revenue by Service</h5>
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between small mb-1">
+                            <span>Storage Fees</span>
+                            <span class="fw-bold">55%</span>
+                        </div>
+                        <div class="progress" style="height: 8px;">
+                            <div class="progress-bar" style="width: 55%; background: var(--primary-wine);"></div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between small mb-1">
+                            <span>Fulfillment (Pick/Pack)</span>
+                            <span class="fw-bold">30%</span>
+                        </div>
+                        <div class="progress" style="height: 8px;">
+                            <div class="progress-bar bg-info" style="width: 30%;"></div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between small mb-1">
+                            <span>Value Added Services</span>
+                            <span class="fw-bold">15%</span>
+                        </div>
+                        <div class="progress" style="height: 8px;">
+                            <div class="progress-bar bg-warning" style="width: 15%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4 mb-4">
+            <div class="col-md-4">
+                <div class="card report-card p-4 bg-white">
+                    <h5 class="fw-bold mb-3">Billing Health</h5>
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <span class="small text-muted">Outstanding Invoices</span>
+                        <span class="fw-bold">₦2,840,000</span>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <span class="small text-muted">Avg. Payment Days</span>
+                        <span class="fw-bold text-success">4.2 Days</span>
+                    </div>
+                    <hr>
+                    <div class="text-center py-2">
+                        <small class="text-muted d-block mb-1">Collection Efficiency</small>
+                        <h3 class="fw-bold text-wine" style="color:var(--primary-wine)">94.2%</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card report-card p-4 bg-white">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h5 class="fw-bold mb-0 text-danger"><i class="bi bi-exclamation-octagon me-2"></i>Delinquent Accounts</h5>
+                        <button class="btn btn-sm btn-outline-danger">Send Bulk Reminders</button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0 small">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Client</th>
+                                    <th>Days Overdue</th>
+                                    <th>Amount Due</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="delinquent-row">
+                                    <td class="fw-bold">FashionHub</td>
+                                    <td><span class="badge bg-danger">45 Days</span></td>
+                                    <td class="fw-bold text-danger">₦450,000</td>
+                                    <td><button class="btn btn-sm btn-light border py-0 px-2" data-bs-toggle="modal" data-bs-target="#delinquentModal">Details</button></td>
+                                </tr>
+                                <tr class="delinquent-row">
+                                    <td class="fw-bold">Zara Logistics</td>
+                                    <td><span class="badge bg-warning text-dark">18 Days</span></td>
+                                    <td class="fw-bold">₦120,500</td>
+                                    <td><button class="btn btn-sm btn-light border py-0 px-2" data-bs-toggle="modal" data-bs-target="#delinquentModal">Details</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="card report-card p-4 bg-white">
+                    <h5 class="fw-bold mb-4">Warehouse Capacity Forecast</h5>
+                    <div class="chart-placeholder">
+                        <span class="text-muted">Utilization Forecast (Projecting 100% by March)</span>
+                    </div>
+                    <p class="small text-danger mt-3 mb-0">
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                        Action Required: Hub A is reaching critical mass. Consider opening the North Wing overflow.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card report-card p-4 bg-white">
+                    <h5 class="fw-bold mb-4">Inventory Accuracy Rate</h5>
+                    <div class="text-center py-4">
+                        <div class="display-3 fw-bold text-success">99.8%</div>
+                        <p class="text-muted">Based on last 5,000 cycle counts</p>
+                    </div>
+                    <div class="table-responsive small">
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Client</th>
+                                    <th>Variance</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>TechStore</td>
+                                    <td>0.00%</td>
+                                    <td><i class="bi bi-check-circle-fill text-success"></i></td>
+                                </tr>
+                                <tr>
+                                    <td>FashionHub</td>
+                                    <td>-0.02%</td>
+                                    <td><i class="bi bi-dash-circle-fill text-warning"></i></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="delinquentModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content p-4 rounded-4 border-0 shadow">
+                <div class="modal-header border-0 p-0 mb-3">
+                    <h5 class="fw-bold">Account Restriction Protocol</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <p class="small text-muted">This client has exceeded the 30-day payment threshold. Automated late fees have been applied.</p>
+                    <div class="bg-light p-3 rounded mb-3">
+                        <div class="d-flex justify-content-between small mb-1"><span>Principal:</span> <strong>₦450,000</strong></div>
+                        <div class="d-flex justify-content-between small"><span>Late Surcharge:</span> <strong>₦22,500</strong></div>
+                    </div>
+                    <div class="form-check form-switch mb-4">
+                        <input class="form-check-input" type="checkbox" id="restrictOutbound">
+                        <label class="form-check-label small fw-bold" for="restrictOutbound">Freeze Outbound Shipments</label>
+                    </div>
+                    <button class="btn btn-wine w-100 py-2 fw-bold">Apply Enforcement</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="exportModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content p-4 rounded-4 border-0 shadow text-center">
+                <i class="bi bi-file-earmark-pdf display-4 text-danger mb-3"></i>
+                <h5 class="fw-bold">Generate Audit Report</h5>
+                <p class="small text-muted">This will compile all financial, operational, and inventory logs for the current quarter.</p>
+                <div class="d-grid gap-2">
+                    <button class="btn btn-wine">Download PDF Audit</button>
+                    <button class="btn btn-outline-dark" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

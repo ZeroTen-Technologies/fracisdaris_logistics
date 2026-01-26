@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | Fracisdaris Logistic Ltd</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    
+    <style>
+        :root {
+            --primary-wine: #800020;
+            --accent-red: #a30029;
+            --text-dark: #2d2d2d;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: var(--text-dark);
+        }
+
+        /* Nav Styling (Uniform) */
+        .glass-nav {
+            background: #ffffff;
+            border-bottom: 3px solid var(--primary-wine);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .navbar-brand { color: var(--text-dark) !important; }
+        .nav-link { color: var(--text-dark); }
+        .nav-link:hover { color: var(--primary-wine) !important; }
+        .nav-link.active { color: var(--primary-wine) !important; font-weight: 600; }
+
+        /* Tagline Hero */
+        .about-hero {
+            background: linear-gradient(rgba(128, 0, 32, 0.9), rgba(128, 0, 32, 0.9)), 
+                        url('https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&q=80&w=1920');
+            background-size: cover;
+            background-position: center;
+            padding: 120px 0;
+            color: white;
+            text-align: center;
+        }
+
+        .tagline {
+            font-style: italic;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        /* Business Model Section */
+        .branch-feature {
+            background: #f8f9fa;
+            border-left: 5px solid var(--primary-wine);
+            padding: 40px;
+            border-radius: 0 20px 20px 0;
+        }
+
+        .benefit-icon {
+            font-size: 2.5rem;
+            color: var(--primary-wine);
+            margin-bottom: 15px;
+        }
+
+         .btn-glass {
+            background: var(--primary-wine);
+            border: 1px solid var(--primary-wine);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .btn-glass:hover {
+            background: white;
+            color: var(--primary-wine);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(128, 0, 32, 0.2);
+            border-color: white;
+        }
+
+        /* Footer (Exact copy of Home) */
+        footer {
+            background: var(--primary-wine);
+            color: #ffffff;
+            padding: 80px 0 30px 0;
+            margin-top: 50px;
+        }
+        .footer-map-container {
+            border-radius: 15px;
+            overflow: hidden;
+            border: 2px solid rgba(255,255,255,0.2);
+            height: 200px;
+        }
+        .footer-link {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        .footer-link:hover { color: #ffffff; padding-left: 5px; }
+
+        .btn-wine {
+            background: var(--primary-wine);
+            color: white;
+            border-radius: 50px;
+            padding: 12px 30px;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg glass-nav">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="home.html">
+                <i class="bi bi-box-seam me-2" style="color: var(--primary-wine);"></i>FRACISDARIS LOGISTIC LTD
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="home.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="about_us.html">About Us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link btn btn-glass ms-lg-3 text-white" href="login.html">Client Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header class="about-hero">
+        <div class="container" data-aos="fade-up">
+            <h1 class="display-3 fw-bold mb-3">Fracisdaris Logistic Ltd</h1>
+            <h2 class="tagline h4 text-uppercase">...is your sure plug.</h2>
+        </div>
+    </header>
+
+    <section class="py-5">
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-6" data-aos="fade-right">
+                    <h2 class="fw-bold mb-4">We are your <span style="color: var(--primary-wine);">Lagos Branch</span></h2>
+                    <p class="lead fw-bold">No need to rent space - we act as your Lagos branch!</p>
+                    <p>At Fracisdaris Logistic Ltd, we break the geographical barriers for your business. We run your business from anywhere in Nigeria and handle your Lagos deliveries with professional precision.</p>
+                    
+                    <div class="mt-4">
+                        <div class="d-flex mb-3">
+                            <i class="bi bi-check-circle-fill text-danger me-3 fs-5"></i>
+                            <p class="mb-0"><strong>Pickup from motor parks & shipping warehouses:</strong> We save you the stress of movement by collecting your goods directly from major transit hubs.</p>
+                        </div>
+                        <div class="d-flex mb-3">
+                            <i class="bi bi-check-circle-fill text-danger me-3 fs-5"></i>
+                            <p class="mb-0"><strong>Warehousing & storage in Lagos:</strong> Use our facility to store your inventory safely until they are ordered.</p>
+                        </div>
+                        <div class="d-flex mb-3">
+                            <i class="bi bi-check-circle-fill text-danger me-3 fs-5"></i>
+                            <p class="mb-0"><strong>Fast doorstep delivery to your customers:</strong> We bridge the gap between your store and your customer’s front door.</p>
+                        </div>
+                        <div class="d-flex">
+                            <i class="bi bi-check-circle-fill text-danger me-3 fs-5"></i>
+                            <p class="mb-0"><strong>Affordable rates & bulk discounts:</strong> Professional logistics that won't break your bank.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6" data-aos="fade-left">
+                    <div class="position-relative">
+                        <img src="images/2151998729.jpg" class="img-fluid rounded-4 shadow-lg" alt="Lagos Delivery Fleet">
+                        <div class="bg-white p-4 shadow-sm rounded-3 position-absolute bottom-0 start-0 m-3 d-none d-md-block" style="border-left: 5px solid var(--primary-wine);">
+                            <p class="fw-bold mb-0">Running businesses nationwide since 2010.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-5 bg-light text-center">
+        <div class="container" data-aos="zoom-in">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <h3 class="fw-bold mb-4" style="color: var(--primary-wine);">Our Mission</h3>
+                    <p class="fs-5 italic">To empower business owners across Nigeria by providing a seamless, reliable, and affordable presence in Lagos, ensuring that distance is never a barrier to commerce.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="fw-bold mb-4 text-uppercase">Fracisdaris Logistic Ltd</h4>
+                    <p style="color: rgba(255,255,255,0.7)">Providing world-class warehouse and distribution solutions since 2010. Excellence in motion.</p>
+                </div>
+
+                <div class="col-lg-2 col-md-6">
+                    <h5 class="fw-bold mb-4">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="home.html" class="footer-link">Home</a></li>
+                        <li class="mb-2"><a href="services.html" class="footer-link">Our Services</a></li>
+                        <li class="mb-2"><a href="about_us.html" class="footer-link">About Us</a></li>
+                        <li class="mb-2"><a href="contact.html" class="footer-link">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="fw-bold mb-4">Contact Details</h5>
+                    <p class="mb-3"><i class="bi bi-geo-alt-fill me-2"></i> Shop 6 blue plaza, Lagos, Nigeria.</p>
+                    <p class="mb-3"><i class="bi bi-telephone-fill me-2"></i> 07015541128</p>
+                    <p class="mb-4"><i class="bi bi-envelope-fill me-2"></i> okaroonyeka@gmail.com</p>
+                    <a href="contact.html" class="btn btn-outline-light w-100 rounded-pill">Request a Quote</a>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <h5 class="fw-bold mb-4">Our Location</h5>
+                    <div class="footer-map-container">
+                        <iframe width="100%" height="100%" frameborder="0" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3964.502476579227!2d3.2201386!3d6.4578491!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103b86927d73010b%3A0xe5a31a9860b0ec8!2sBlue%20Plaza!5e0!3m2!1sen!2sng!4v1700000000000" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-5 opacity-25">
+            <p class="text-center" style="color: rgba(255,255,255,0.7)">© 2026 Fracisdaris Logistic Ltd. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>AOS.init({ duration: 1000, once: true });</script>
+</body>
+</html>

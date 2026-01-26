@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Management | Fracisdaris Logistic Ltd</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        :root { 
+            --primary-wine: #800020; 
+            --sidebar-width: 260px; 
+            --bg-light: #f8f9fa;
+        }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-light); }
+
+        /* UNIFORM SIDEBAR STYLES */
+        .sidebar { 
+            width: var(--sidebar-width); 
+            height: 100vh; 
+            position: fixed; 
+            left: 0; 
+            top: 0; 
+            background-color: var(--primary-wine); 
+            color: white; 
+            padding-top: 20px; 
+            z-index: 1000; 
+        }
+        .sidebar-brand {
+            padding: 0 20px 30px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .nav-link { 
+            color: rgba(255,255,255,0.8); 
+            padding: 12px 25px; 
+            display: flex; 
+            align-items: center; 
+            text-decoration: none;
+            transition: 0.3s;
+            border-left: 4px solid transparent;
+        }
+        .nav-link i { margin-right: 15px; font-size: 1.2rem; }
+        .nav-link:hover, .nav-link.active { 
+            color: white; 
+            background: rgba(255,255,255,0.1); 
+            border-left: 4px solid white; 
+        }
+
+        /* CONTENT AREA */
+        .main-content { margin-left: var(--sidebar-width); padding: 30px; }
+        .btn-wine { background: var(--primary-wine); color: white; border: none; }
+        .btn-wine:hover { background: #a30029; color: white; }
+        
+        .status-badge { font-weight: 600; padding: 6px 12px; border-radius: 50px; }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="sidebar-brand text-uppercase">
+            <i class="bi bi-box-seam me-2"></i> Fracisdaris
+        </div>
+        <nav class="nav flex-column">
+            <a class="nav-link" href="dashboard.html"><i class="bi bi-speedometer2"></i> Overview</a>
+            <a class="nav-link" href="inventory.html"><i class="bi bi-archive"></i> Inventory</a>
+            <a class="nav-link active" href="orders.html"><i class="bi bi-truck"></i> Orders</a>
+            <a class="nav-link" href="reports.html"><i class="bi bi-bar-chart"></i> Reports</a>
+            <a class="nav-link" href="billing.html"><i class="bi bi-credit-card"></i> Billing</a>
+            <hr class="mx-3 opacity-25">
+            <a class="nav-link" href="account.html"><i class="bi bi-person-gear"></i> Account</a>
+            <a class="nav-link" href="support.html"><i class="bi bi-headset"></i> Support</a>
+            <a class="nav-link text-danger mt-5" href="login.html"><i class="bi bi-box-arrow-left"></i> Logout</a>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3 class="fw-bold">Order Management</h3>
+            <button class="btn btn-wine" data-bs-toggle="modal" data-bs-target="#newOrderModal">
+                <i class="bi bi-plus-lg me-2"></i>Create New Order
+            </button>
+        </div>
+
+        <div class="card border-0 shadow-sm rounded-4 p-4">
+            <div class="table-responsive">
+                <table class="table align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Recipient</th>
+                            <th>Status</th>
+                            <th>Carrier</th>
+                            <th>Tracking</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>#FD-9921</strong></td>
+                            <td>Abeeb Segun, Lekki Phase 1</td>
+                            <td><span class="badge bg-success status-badge">Delivered</span></td>
+                            <td>Internal Fleet</td>
+                            <td><a href="#" class="text-decoration-none text-danger">TRK882731</a></td>
+                            <td>
+                                <button class="btn btn-sm btn-light border" data-bs-toggle="modal" data-bs-target="#viewOrderModal" onclick="populateOrderDetails('#FD-9921', 'Abeeb Segun', 'Delivered')">
+                                    <i class="bi bi-eye"></i> View
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>#FD-9934</strong></td>
+                            <td>Joy Amaka, Ikeja</td>
+                            <td><span class="badge bg-primary status-badge">Processing</span></td>
+                            <td>Pending</td>
+                            <td>-</td>
+                            <td>
+                                <button class="btn btn-sm btn-light border" data-bs-toggle="modal" data-bs-target="#viewOrderModal" onclick="populateOrderDetails('#FD-9934', 'Joy Amaka', 'Processing')">
+                                    <i class="bi bi-eye"></i> View
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="viewOrderModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 rounded-4">
+                <div class="modal-header bg-light">
+                    <h5 class="modal-title fw-bold" id="modalOrderID">Order Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div class="d-flex justify-content-between mb-4">
+                        <div>
+                            <p class="small text-muted mb-0">Status</p>
+                            <h6 id="modalStatus" class="fw-bold">--</h6>
+                        </div>
+                        <div class="text-end">
+                            <p class="small text-muted mb-0">Delivery Date</p>
+                            <h6 class="fw-bold">Jan 26, 2026</h6>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <p class="small text-muted mb-1">Customer Details</p>
+                        <p class="mb-0 fw-bold" id="modalCustomerName">--</p>
+                        <p class="small">Lagos, Nigeria</p>
+                    </div>
+                    <div class="bg-light p-3 rounded-3">
+                        <p class="small fw-bold mb-2">Service Breakdown</p>
+                        <div class="d-flex justify-content-between small mb-1">
+                            <span>Packaging (Service 2)</span>
+                            <span>Completed</span>
+                        </div>
+                        <div class="d-flex justify-content-between small">
+                            <span>POD Collection (Service 4)</span>
+                            <span class="text-danger">Active</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer border-0">
+                    <button class="btn btn-outline-dark w-100" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="newOrderModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content border-0 rounded-4">
+                <div class="modal-header bg-wine text-white">
+                    <h5 class="modal-title text-white">Submit New Outbound Order</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <form>
+                        <h6 class="fw-bold mb-3">Customer Information</h6>
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                <label class="small">Recipient Full Name</label>
+                                <input type="text" class="form-control">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="small">Phone Number</label>
+                                <input type="tel" class="form-control">
+                            </div>
+                            <div class="col-12">
+                                <label class="small">Lagos Delivery Address</label>
+                                <textarea class="form-control" rows="2"></textarea>
+                            </div>
+                        </div>
+                        <h6 class="fw-bold mb-3">Order Items</h6>
+                        <div class="row g-3">
+                            <div class="col-md-8">
+                                <label class="small">Select SKU</label>
+                                <select class="form-select">
+                                    <option>SKU-101: Wireless Headset</option>
+                                    <option>SKU-XYZ: Premium Watch Case</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="small">Quantity</label>
+                                <input type="number" class="form-control">
+                            </div>
+                        </div>
+                        <div class="mt-4 p-3 bg-light rounded">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="codCheck">
+                                <label class="form-check-label small" for="codCheck">
+                                    <strong>Collect Payment on Delivery?</strong> (Service 4)
+                                </label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-wine w-100 mt-4">Submit Order for Packaging</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Simple script to update the "View" modal content dynamically
+        function populateOrderDetails(id, name, status) {
+            document.getElementById('modalOrderID').innerText = 'Order Details: ' + id;
+            document.getElementById('modalCustomerName').innerText = name;
+            document.getElementById('modalStatus').innerText = status;
+        }
+    </script>
+</body>
+</html>
