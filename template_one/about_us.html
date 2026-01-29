@@ -11,8 +11,8 @@
     
     <style>
         :root {
-            --primary-wine: #800020;
-            --accent-red: #a30029;
+            --primary-wine: #64A0C8;
+            --accent-red: #87CEEB;
             --text-dark: #2d2d2d;
         }
 
@@ -38,7 +38,7 @@
 
         /* Tagline Hero */
         .about-hero {
-            background: linear-gradient(rgba(128, 0, 32, 0.9), rgba(128, 0, 32, 0.9)), 
+            background: linear-gradient(rgba(70, 130, 180, 0.4), rgba(135, 206, 235, 0.4)), 
                         url('https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&q=80&w=1920');
             background-size: cover;
             background-position: center;
@@ -153,19 +153,19 @@
                     
                     <div class="mt-4">
                         <div class="d-flex mb-3">
-                            <i class="bi bi-check-circle-fill text-danger me-3 fs-5"></i>
+                            <i class="bi bi-check-circle-fill text-grey me-3 fs-5"></i>
                             <p class="mb-0"><strong>Pickup from motor parks & shipping warehouses:</strong> We save you the stress of movement by collecting your goods directly from major transit hubs.</p>
                         </div>
                         <div class="d-flex mb-3">
-                            <i class="bi bi-check-circle-fill text-danger me-3 fs-5"></i>
+                            <i class="bi bi-check-circle-fill text-grey me-3 fs-5"></i>
                             <p class="mb-0"><strong>Warehousing & storage in Lagos:</strong> Use our facility to store your inventory safely until they are ordered.</p>
                         </div>
                         <div class="d-flex mb-3">
-                            <i class="bi bi-check-circle-fill text-danger me-3 fs-5"></i>
+                            <i class="bi bi-check-circle-fill text-grey me-3 fs-5"></i>
                             <p class="mb-0"><strong>Fast doorstep delivery to your customers:</strong> We bridge the gap between your store and your customer’s front door.</p>
                         </div>
                         <div class="d-flex">
-                            <i class="bi bi-check-circle-fill text-danger me-3 fs-5"></i>
+                            <i class="bi bi-check-circle-fill text-grey me-3 fs-5"></i>
                             <p class="mb-0"><strong>Affordable rates & bulk discounts:</strong> Professional logistics that won't break your bank.</p>
                         </div>
                     </div>
@@ -216,7 +216,7 @@
                     <p class="mb-3"><i class="bi bi-geo-alt-fill me-2"></i> Shop 6 blue plaza, Lagos, Nigeria.</p>
                     <p class="mb-3"><i class="bi bi-telephone-fill me-2"></i> 07015541128</p>
                     <p class="mb-4"><i class="bi bi-envelope-fill me-2"></i> okaroonyeka@gmail.com</p>
-                    <a href="contact.html" class="btn btn-outline-light w-100 rounded-pill">Request a Quote</a>
+                    <button class="btn btn-outline-light w-100 rounded-pill" data-bs-toggle="modal" data-bs-target="#quoteModal">Request a Quote</button>
                 </div>
 
                 <div class="col-lg-4 col-md-6">
@@ -234,5 +234,132 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>AOS.init({ duration: 1000, once: true });</script>
+
+    <div class="modal fade" id="quoteModal" tabindex="-1" aria-labelledby="quoteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg" style="border-radius: 20px; backdrop-filter: blur(15px); background: rgba(255, 255, 255, 0.95);">
+            <div class="modal-header border-0 pb-0">
+                <h4 class="modal-title fw-bold" id="quoteModalLabel" style="color: var(--primary-blue);">
+                    <i class="bi bi-calculator me-2"></i>Instant Quote & Order
+                </h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            
+            <div class="modal-body p-4">
+                <form id="homepageOrderForm">
+                    <div class="mb-4">
+                        <h6 class="text-uppercase fw-bold mb-3" style="font-size: 0.8rem; letter-spacing: 1px; color: var(--primary-blue);">1. Logistics Estimation</h6>
+                        <div class="row g-3 p-3 rounded-4" style="background: rgba(100, 160, 200, 0.1); border: 1px solid rgba(100, 160, 200, 0.2);">
+                            <div class="col-md-4">
+                                <label class="small fw-semibold">Service Type</label>
+                                <select class="form-select border-0 shadow-sm" id="shipType" required>
+                                    <option value="standard">Standard Road</option>
+                                    <option value="express">Express Delivery (+25%)</option>
+                                    <option value="fragile">Fragile Handling (+40%)</option>
+                                    <option value="refrigerated">Climate Controlled (+50%)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="small fw-semibold">Weight (kg)</label>
+                                <input type="number" class="form-control border-0 shadow-sm" id="calcWeight" placeholder="0" min="1" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="small fw-semibold">Distance (km)</label>
+                                <input type="number" class="form-control border-0 shadow-sm" id="calcDistance" placeholder="0" min="1" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <h6 class="text-uppercase fw-bold mb-3" style="font-size: 0.8rem; letter-spacing: 1px; color: var(--primary-blue);">2. Item & Delivery Details</h6>
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <div class="border-2 border-dashed rounded-4 p-3 text-center bg-light position-relative" style="border: 2px dashed #ccc;">
+                                    <input type="file" id="itemImage" class="position-absolute opacity-0 w-100 h-100 top-0 start-0" style="cursor: pointer;" accept="image/*">
+                                    <div id="uploadPreview">
+                                        <i class="bi bi-camera fs-3 text-muted"></i>
+                                        <p class="small mb-0 text-muted">Upload Item Photo (Optional)</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="small fw-semibold">Recipient Full Name</label>
+                                <input type="text" class="form-control bg-light border-0" placeholder="Recipient Name" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="small fw-semibold">Phone Number</label>
+                                <input type="tel" class="form-control bg-light border-0" placeholder="070..." required>
+                            </div>
+                            <div class="col-12">
+                                <label class="small fw-semibold">Delivery Address</label>
+                                <textarea class="form-control bg-light border-0" rows="2" placeholder="Enter full address"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-4 rounded-4 text-white shadow-sm d-flex justify-content-between align-items-center" style="background: var(--primary-wine);">
+                        <div>
+                            <p class="small mb-0 opacity-75">Estimated Quote</p>
+                            <h3 class="fw-bold mb-0">₦<span id="calcTotal">0.00</span></h3>
+                        </div>
+                        <button type="submit" class="btn btn-light rounded-pill px-4 fw-bold" style="color: var(--primary-wine);">
+                            Book Order Now
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const totalDisplay = document.getElementById('calcTotal');
+        
+        // Calculation logic
+        const updatePrice = () => {
+            const weight = parseFloat(document.getElementById('calcWeight').value) || 0;
+            const distance = parseFloat(document.getElementById('calcDistance').value) || 0;
+            const type = document.getElementById('shipType').value;
+            
+            if (weight > 0 && distance > 0) {
+                let base = 500 + (weight * 15) + (distance * 50);
+                const multipliers = {'standard': 1.0, 'express': 1.25, 'fragile': 1.4, 'refrigerated': 1.5};
+                let total = base * multipliers[type];
+                totalDisplay.innerText = total.toLocaleString(undefined, {minimumFractionDigits: 2});
+            } else {
+                totalDisplay.innerText = "0.00";
+            }
+        };
+
+        ['calcWeight', 'calcDistance', 'shipType'].forEach(id => {
+            const el = document.getElementById(id);
+            if(el) el.addEventListener('input', updatePrice);
+        });
+
+        // Image Preview logic
+        const imageInput = document.getElementById('itemImage');
+        const previewDiv = document.getElementById('uploadPreview');
+
+        if(imageInput) {
+            imageInput.addEventListener('change', function() {
+                if (this.files && this.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        previewDiv.innerHTML = `<img src="${e.target.result}" style="max-height: 60px; border-radius: 5px;" class="mb-1"><p class="small mb-0 text-success fw-bold">Image Loaded</p>`;
+                    }
+                    reader.readAsDataURL(this.files[0]);
+                }
+            });
+        }
+
+        document.getElementById('homepageOrderForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Your quote and order have been submitted! Fracisdaris Logistics will contact you shortly to confirm pickup.');
+            bootstrap.Modal.getInstance(document.getElementById('quoteModal')).hide();
+        });
+    });
+</script>
+
 </body>
 </html>

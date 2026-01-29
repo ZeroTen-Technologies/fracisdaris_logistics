@@ -11,8 +11,8 @@
     
     <style>
         :root {
-            --primary-wine: #800020; /* Dark Wine Red */
-            --accent-red: #a30029;
+            --primary-blue: #64A0C8; /* Dark Wine Red */
+            --accent-red: #87CEEB;
             --glass-bg: rgba(255, 255, 255, 0.9);
             --glass-border: rgba(128, 0, 32, 0.2);
             --glass-blur: blur(15px);
@@ -40,14 +40,14 @@
         .glass-card:hover {
             transform: translateY(-10px);
             background: #ffffff;
-            border-color: var(--primary-wine);
+            border-color: var(--primary-blue);
             box-shadow: 0 15px 40px rgba(128, 0, 32, 0.15);
         }
 
         .glass-nav {
             background: #ffffff;
             backdrop-filter: blur(10px);
-            border-bottom: 3px solid var(--primary-wine);
+            border-bottom: 3px solid var(--primary-blue);
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -57,7 +57,7 @@
         /* Hero Section */
         .hero-section {
             height: 90vh;
-            background: linear-gradient(rgba(128, 0, 32, 0.7), rgba(0, 0, 0, 0.8)), 
+            background: linear-gradient(rgba(70, 130, 180, 0.4), rgba(135, 206, 235, 0.4)), 
                         url('images/2151998729.jpg');
             background-size: cover;
             background-position: center;
@@ -75,8 +75,8 @@
         }
 
         .btn-glass {
-            background: var(--primary-wine);
-            border: 1px solid var(--primary-wine);
+            background: var(--primary-blue);
+            border: 1px solid var(--primary-blue);
             color: white;
             padding: 12px 30px;
             border-radius: 50px;
@@ -86,7 +86,7 @@
 
         .btn-glass:hover {
             background: white;
-            color: var(--primary-wine);
+            color: var(--primary-blue);
             transform: translateY(-3px);
             box-shadow: 0 10px 20px rgba(128, 0, 32, 0.2);
             border-color: white;
@@ -94,12 +94,12 @@
 
         .service-icon {
             font-size: 2.5rem;
-            color: var(--primary-wine);
+            color: var(--primary-blue);
             margin-bottom: 15px;
         }
 
         .text-info {
-            color: var(--primary-wine) !important;
+            color: var(--primary-blue) !important;
             font-weight: 700;
         }
 
@@ -114,7 +114,7 @@
         }
 
         footer {
-            background: var(--primary-wine);
+            background: var(--primary-blue);
             color: #ffffff;
             padding: 80px 0 30px 0;
             margin-top: 50px;
@@ -140,8 +140,8 @@
         
         .navbar-brand { color: var(--text-dark) !important; }
         .nav-link { color: var(--text-dark); }
-        .nav-link:hover { color: var(--primary-wine) !important; }
-        .nav-link.active { color: var(--primary-wine) !important; font-weight: 600; }
+        .nav-link:hover { color: var(--primary-blue) !important; }
+        .nav-link.active { color: var(--primary-blue) !important; font-weight: 600; }
         
     </style>
 </head>
@@ -150,7 +150,7 @@
     <nav class="navbar navbar-expand-lg glass-nav">
         <div class="container">
             <a class="navbar-brand fw-bold" href="home.html">
-                <i class="bi bi-box-seam me-2" style="color: var(--primary-wine);"></i>FRACISDARIS LOGISTIC LTD
+                <i class="bi bi-box-seam me-2" style="color: var(--primary-blue);"></i>FRACISDARIS LOGISTIC LTD
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -172,7 +172,7 @@
             <h1 class="hero-title text-uppercase">Fracisdaris Logistic Ltd</h1>
             <p class="lead mb-4 fs-3">Your Partner in Smarter Logistics & Supply Chain Excellence</p>
             <div class="d-flex justify-content-center gap-3">
-                <a href="contact.html" class="btn btn-glass btn-lg">Request a Quote</a>
+                <button class="btn btn-glass btn-lg" data-bs-toggle="modal" data-bs-target="#quoteModal">Request a Quote</button>
                 <a href="login.html" class="btn btn-outline-light btn-lg rounded-pill">Client Login</a>
             </div>
         </div>
@@ -180,7 +180,7 @@
 
     <section class="py-5">
         <div class="container">
-            <h2 class="text-center mb-5 fw-bold" data-aos="fade-up" style="color: var(--primary-wine);">Our Core Services</h2>
+            <h2 class="text-center mb-5 fw-bold" data-aos="fade-up" style="color: var(--primary-blue);">Our Core Services</h2>
             <div class="row g-4">
                 <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
                     <div class="glass-card p-4 text-center h-100">
@@ -277,7 +277,7 @@
     <section class="py-5">
         <div class="container">
             <div class="glass-card p-5 text-center" data-aos="zoom-in">
-                <h2 class="mb-4" style="color: var(--primary-wine);">About Our Mission</h2>
+                <h2 class="mb-4" style="color: var(--primary-blue);">About Our Mission</h2>
                 <p class="fs-5">Founded on the principles of reliability and innovation, Fracisdaris Logistic Ltd has grown into a leading force in global distribution. Our mission is to simplify the complex world of logistics through technology, giving our clients the freedom to focus on growing their business while we handle the heavy lifting. With decades of combined expertise, we don't just move boxes; we move businesses forward.</p>
             </div>
         </div>
@@ -344,7 +344,7 @@
                     <p class="mb-4">
                         <i class="bi bi-envelope-fill me-2"></i> okaroonyeka@gmail.com
                     </p>
-                    <a href="contact.html" class="btn btn-outline-light w-100 rounded-pill">Request a Quote</a>
+                    <button class="btn btn-outline-light w-100 rounded-pill" data-bs-toggle="modal" data-bs-target="#quoteModal">Request a Quote</button>
                 </div>
 
                 <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
@@ -384,5 +384,131 @@
             });
         });
     </script>
+
+    <div class="modal fade" id="quoteModal" tabindex="-1" aria-labelledby="quoteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg" style="border-radius: 20px; backdrop-filter: blur(15px); background: rgba(255, 255, 255, 0.95);">
+            <div class="modal-header border-0 pb-0">
+                <h4 class="modal-title fw-bold" id="quoteModalLabel" style="color: var(--primary-blue);">
+                    <i class="bi bi-calculator me-2"></i>Instant Quote & Order
+                </h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            
+            <div class="modal-body p-4">
+                <form id="homepageOrderForm">
+                    <div class="mb-4">
+                        <h6 class="text-uppercase fw-bold mb-3" style="font-size: 0.8rem; letter-spacing: 1px; color: var(--primary-blue);">1. Logistics Estimation</h6>
+                        <div class="row g-3 p-3 rounded-4" style="background: rgba(100, 160, 200, 0.1); border: 1px solid rgba(100, 160, 200, 0.2);">
+                            <div class="col-md-4">
+                                <label class="small fw-semibold">Service Type</label>
+                                <select class="form-select border-0 shadow-sm" id="shipType" required>
+                                    <option value="standard">Standard Road</option>
+                                    <option value="express">Express Delivery (+25%)</option>
+                                    <option value="fragile">Fragile Handling (+40%)</option>
+                                    <option value="refrigerated">Climate Controlled (+50%)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="small fw-semibold">Weight (kg)</label>
+                                <input type="number" class="form-control border-0 shadow-sm" id="calcWeight" placeholder="0" min="1" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="small fw-semibold">Distance (km)</label>
+                                <input type="number" class="form-control border-0 shadow-sm" id="calcDistance" placeholder="0" min="1" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <h6 class="text-uppercase fw-bold mb-3" style="font-size: 0.8rem; letter-spacing: 1px; color: var(--primary-blue);">2. Item & Delivery Details</h6>
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <div class="border-2 border-dashed rounded-4 p-3 text-center bg-light position-relative" style="border: 2px dashed #ccc;">
+                                    <input type="file" id="itemImage" class="position-absolute opacity-0 w-100 h-100 top-0 start-0" style="cursor: pointer;" accept="image/*">
+                                    <div id="uploadPreview">
+                                        <i class="bi bi-camera fs-3 text-muted"></i>
+                                        <p class="small mb-0 text-muted">Upload Item Photo (Optional)</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="small fw-semibold">Recipient Full Name</label>
+                                <input type="text" class="form-control bg-light border-0" placeholder="Recipient Name" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="small fw-semibold">Phone Number</label>
+                                <input type="tel" class="form-control bg-light border-0" placeholder="070..." required>
+                            </div>
+                            <div class="col-12">
+                                <label class="small fw-semibold">Delivery Address</label>
+                                <textarea class="form-control bg-light border-0" rows="2" placeholder="Enter full address"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-4 rounded-4 text-white shadow-sm d-flex justify-content-between align-items-center" style="background: var(--primary-blue);">
+                        <div>
+                            <p class="small mb-0 opacity-75">Estimated Quote</p>
+                            <h3 class="fw-bold mb-0">₦<span id="calcTotal">0.00</span></h3>
+                        </div>
+                        <button type="submit" class="btn btn-light rounded-pill px-4 fw-bold" style="color: var(--primary-blue);">
+                            Book Order Now
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const totalDisplay = document.getElementById('calcTotal');
+        
+        // Calculation logic
+        const updatePrice = () => {
+            const weight = parseFloat(document.getElementById('calcWeight').value) || 0;
+            const distance = parseFloat(document.getElementById('calcDistance').value) || 0;
+            const type = document.getElementById('shipType').value;
+            
+            if (weight > 0 && distance > 0) {
+                let base = 500 + (weight * 15) + (distance * 50);
+                const multipliers = {'standard': 1.0, 'express': 1.25, 'fragile': 1.4, 'refrigerated': 1.5};
+                let total = base * multipliers[type];
+                totalDisplay.innerText = total.toLocaleString(undefined, {minimumFractionDigits: 2});
+            } else {
+                totalDisplay.innerText = "0.00";
+            }
+        };
+
+        ['calcWeight', 'calcDistance', 'shipType'].forEach(id => {
+            const el = document.getElementById(id);
+            if(el) el.addEventListener('input', updatePrice);
+        });
+
+        // Image Preview logic
+        const imageInput = document.getElementById('itemImage');
+        const previewDiv = document.getElementById('uploadPreview');
+
+        if(imageInput) {
+            imageInput.addEventListener('change', function() {
+                if (this.files && this.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        previewDiv.innerHTML = `<img src="${e.target.result}" style="max-height: 60px; border-radius: 5px;" class="mb-1"><p class="small mb-0 text-success fw-bold">Image Loaded</p>`;
+                    }
+                    reader.readAsDataURL(this.files[0]);
+                }
+            });
+        }
+
+        document.getElementById('homepageOrderForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Your quote and order have been submitted! Fracisdaris Logistics will contact you shortly to confirm pickup.');
+            bootstrap.Modal.getInstance(document.getElementById('quoteModal')).hide();
+        });
+    });
+</script>
 </body>
 </html>

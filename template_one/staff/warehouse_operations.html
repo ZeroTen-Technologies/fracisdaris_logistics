@@ -10,13 +10,13 @@
     <style>
         :root { 
             --admin-navy: #1a1a2e; 
-            --primary-wine: #800020;
+            --primary-wine: #64A0C8;
             --sidebar-width: 260px; 
             --bg-light: #f4f7f6;
         }
         body { font-family: 'Inter', sans-serif; background-color: var(--bg-light); }
 
-        /* UNIFORM STAFF SIDEBAR */
+        /* SCROLLABLE STAFF SIDEBAR */
         .sidebar { 
             width: var(--sidebar-width); 
             height: 100vh; 
@@ -27,7 +27,15 @@
             color: white; 
             padding-top: 20px; 
             z-index: 1000; 
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
         }
+
+        .sidebar::-webkit-scrollbar { width: 5px; }
+        .sidebar::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); }
+        .sidebar::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); border-radius: 10px; }
+
         .sidebar-brand {
             padding: 0 20px 20px;
             font-weight: 700;
@@ -57,7 +65,7 @@
 
         .main-content { margin-left: var(--sidebar-width); padding: 30px; }
         .btn-wine { background: var(--primary-wine); color: white; border: none; }
-        .btn-wine:hover { background: #a30029; color: white; }
+        .btn-wine:hover { background: #87CEEB; color: white; }
         
         /* OPS CARDS */
         .ops-card { 
@@ -94,6 +102,7 @@
             <div class="section-label">ADMINISTRATION</div>
             <a class="nav-link" href="reports_advanced.html"><i class="bi bi-graph-up-arrow"></i> Advanced Reports</a>
             <a class="nav-link" href="staff_performance.html"><i class="bi bi-person-badge"></i> Staff Performance</a>
+            <a class="nav-link" href="system_admin.html"><i class="bi bi-gear-fill"></i> System Administration</a>
             <hr class="mx-3 opacity-25">
             <a class="nav-link text-danger" href="login.html"><i class="bi bi-power"></i> System Logout</a>
         </nav>

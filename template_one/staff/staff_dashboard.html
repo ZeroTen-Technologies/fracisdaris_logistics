@@ -10,13 +10,13 @@
     <style>
         :root { 
             --admin-navy: #1a1a2e; 
-            --primary-wine: #800020;
+            --primary-wine: #64A0C8;
             --sidebar-width: 260px; 
             --bg-light: #f4f7f6;
         }
         body { font-family: 'Inter', sans-serif; background-color: var(--bg-light); }
 
-        /* ADMIN SIDEBAR (Different color to distinguish from Client Portal) */
+        /* SCROLLABLE STAFF SIDEBAR */
         .sidebar { 
             width: var(--sidebar-width); 
             height: 100vh; 
@@ -27,7 +27,15 @@
             color: white; 
             padding-top: 20px; 
             z-index: 1000; 
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
         }
+
+        .sidebar::-webkit-scrollbar { width: 5px; }
+        .sidebar::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); }
+        .sidebar::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); border-radius: 10px; }
+        
         .sidebar-brand {
             padding: 0 20px 20px;
             font-weight: 700;
@@ -82,6 +90,7 @@
             <div class="section-label">ADMINISTRATION</div>
             <a class="nav-link" href="reports_advanced.html"><i class="bi bi-graph-up-arrow"></i> Advanced Reports</a>
             <a class="nav-link" href="staff_performance.html"><i class="bi bi-person-badge"></i> Staff Performance</a>
+            <a class="nav-link" href="system_admin.html"><i class="bi bi-gear-fill"></i> System Administration</a>
             <hr class="mx-3 opacity-25">
             <a class="nav-link text-danger" href="login.html"><i class="bi bi-power"></i> System Logout</a>
         </nav>
@@ -95,7 +104,7 @@
             </div>
             <div class="text-end">
                 <button class="btn btn-outline-dark btn-sm me-2"><i class="bi bi-printer"></i> Daily Summary</button>
-                <button class="btn btn-wine btn-sm text-white" style="background:#800020">Live Warehouse Map</button>
+                <button class="btn btn-wine btn-sm text-white" style="background:#64A0C8">Live Warehouse Map</button>
             </div>
         </div>
 
@@ -191,7 +200,7 @@
                             <p class="small text-muted mb-0">Invoice expires in 2 days</p>
                         </div>
                     </div>
-                    <a href="reports_advanced.html" class="btn btn-outline-danger w-100 mt-3 btn-sm">View All Delinquent Accounts</a>
+                    <a href="reports_advanced.html" class="btn btn-outline-primary w-100 mt-3 btn-sm">View All Delinquent Accounts</a>
                 </div>
 
                 <div class="mt-4">
