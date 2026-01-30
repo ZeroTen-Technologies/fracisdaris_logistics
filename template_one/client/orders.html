@@ -68,7 +68,7 @@
             <a class="nav-link" href="inventory.html"><i class="bi bi-archive"></i> Inventory</a>
             <a class="nav-link active" href="orders.html"><i class="bi bi-truck"></i> Orders</a>
             <a class="nav-link" href="reports.html"><i class="bi bi-bar-chart"></i> Reports</a>
-            <a class="nav-link" href="billing.html"><i class="bi bi-credit-card"></i> Billing</a>
+            <a class="nav-link" href="billing.html"><i class="bi bi-credit-card"></i> Transactions</a>
             <hr class="mx-3 opacity-25">
             <a class="nav-link" href="account.html"><i class="bi bi-person-gear"></i> Account</a>
             <a class="nav-link" href="support.html"><i class="bi bi-headset"></i> Support</a>
@@ -253,7 +253,7 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-wine w-100 mt-4 py-3 rounded-pill fw-bold shadow-sm">
+                    <button type="submit" class="btn btn-wine w-100 mt-4 py-3 rounded-pill fw-bold shadow-sm" data-bs-toggle="modal" data-bs-target="#paymentModal">
                         Confirm & Create Order
                     </button>
                 </form>
@@ -261,6 +261,27 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="paymentModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-4 border-0">
+                <div class="modal-header bg-wine text-white">
+                    <h5 class="modal-title text-white">Secure Checkout</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4 text-center">
+                    <p class="mb-4">Select your preferred payment gateway</p>
+                    <button class="btn btn-outline-primary w-100 mb-3 py-3 d-flex justify-content-center align-items-center">
+                        <i class="bi bi-credit-card me-2"></i> Pay with Zeetenpay
+                    </button>
+                    <button class="btn btn-outline-warning w-100 mb-3 py-3 d-flex justify-content-center align-items-center">
+                        <i class="bi bi-paypal me-2"></i> Pay with Bank Account
+                    </button>
+                    <p class="smaller text-muted">Transactions are encrypted and secure.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {

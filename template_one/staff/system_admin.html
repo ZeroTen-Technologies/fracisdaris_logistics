@@ -71,8 +71,10 @@
         .admin-card { border: none; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
         .log-entry { font-family: 'Courier New', monospace; font-size: 0.8rem; border-left: 3px solid #ddd; padding-left: 10px; margin-bottom: 8px; }
         
-        /* Dropdown styling adjustment */
         .dropdown-menu { border: none; box-shadow: 0 5px 15px rgba(0,0,0,0.1); font-size: 0.85rem; }
+        
+        /* Pricing Engine specific style */
+        .pricing-header { border-left: 4px solid var(--primary-wine); padding-left: 15px; }
     </style>
 </head>
 <body>
@@ -115,6 +117,60 @@
 
         <div class="row g-4">
             <div class="col-md-8">
+                <div class="card admin-card p-4 bg-white mb-4">
+                    <div class="pricing-header mb-4">
+                        <h5 class="fw-bold mb-1">Logistics Pricing Engine</h5>
+                        <p class="small text-muted mb-0">Adjust rates used for the customer quote calculator</p>
+                    </div>
+                    
+                    <form id="rateSettingsForm">
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-4">
+                                <label class="small fw-bold mb-1">Base Handling (₦)</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-0">₦</span>
+                                    <input type="number" class="form-control bg-light border-0" value="500" id="adminBasePrice">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="small fw-bold mb-1">Rate per KG (₦)</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-0">₦</span>
+                                    <input type="number" class="form-control bg-light border-0" value="15" id="adminWeightRate">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="small fw-bold mb-1">Rate per KM (₦)</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-0">₦</span>
+                                    <input type="number" class="form-control bg-light border-0" value="50" id="adminDistanceRate">
+                                </div>
+                            </div>
+                        </div>
+
+                        <h6 class="small fw-bold text-uppercase text-muted mb-3" style="letter-spacing: 1px;">Multiplier Config</h6>
+                        <div class="row g-3 align-items-end">
+                            <div class="col-md-3">
+                                <label class="small text-muted">Express</label>
+                                <input type="text" class="form-control form-control-sm" value="1.25x">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="small text-muted">Fragile</label>
+                                <input type="text" class="form-control form-control-sm" value="1.40x">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="small text-muted">Refrigerated</label>
+                                <input type="text" class="form-control form-control-sm" value="1.50x">
+                            </div>
+                            <div class="col-md-3">
+                                <button type="button" class="btn btn-sm btn-wine w-100" onclick="saveRates(this)">
+                                    <i class="bi bi-save me-1"></i> Update
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
                 <div class="card admin-card p-4 bg-white mb-4">
                     <div class="d-flex justify-content-between mb-4">
                         <h5 class="fw-bold">User Access Control</h5>
@@ -202,7 +258,7 @@
                         <div class="log-entry"><strong>[2024-05-20 14:22]</strong> USER_LOGIN: admin@fracisdaris.com from IP 192.168.1.1</div>
                         <div class="log-entry"><strong>[2024-05-20 13:05]</strong> PASSWORD_CHANGE: warehouse_floor_1 requested reset.</div>
                         <div class="log-entry" style="border-left-color: #dc3545;"><strong>[2024-05-20 12:40]</strong> FAILED_LOGIN: unauthorized attempt on 'root' account.</div>
-                        <div class="log-entry"><strong>[2024-05-20 11:15]</strong> PERMISSION_CHANGE: Client 'TechStore' moved to 'Active'.</div>
+                        <div class="log-entry"><strong>[2024-05-20 11:15]</strong> PERMISSION_CHANGE: Rates updated by Super Admin.</div>
                     </div>
                 </div>
             </div>
@@ -305,7 +361,7 @@
                 </div>
                 <div class="modal-body p-0 text-center">
                     <i class="bi bi-shield-lock text-warning fs-1 mb-3 d-block"></i>
-                    <p>Are you sure you want to trigger a password reset for this user? They will be logged out of all active sessions.</p>
+                    <p>Are you sure you want to trigger a password reset for this user?</p>
                     <button class="btn btn-wine w-100">Send Reset Link</button>
                     <button class="btn btn-link text-muted w-100 mt-2 small text-decoration-none" data-bs-dismiss="modal">Cancel</button>
                 </div>
@@ -324,8 +380,7 @@
                     <div class="alert alert-danger small">
                         <strong>Warning:</strong> Deactivating this user will revoke all warehouse access immediately.
                     </div>
-                    <p class="small">Reason for deactivation:</p>
-                    <textarea class="form-control mb-3" rows="2" placeholder="e.g., Staff resignation, security breach..."></textarea>
+                    <textarea class="form-control mb-3" rows="2" placeholder="Reason for deactivation..."></textarea>
                     <button class="btn btn-danger w-100">Confirm Deactivation</button>
                 </div>
             </div>
@@ -333,5 +388,24 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function saveRates(btn) {
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span>';
+            btn.disabled = true;
+            
+            // Simulating a database save
+            setTimeout(() => {
+                btn.innerHTML = '<i class="bi bi-check-lg"></i> Updated';
+                btn.className = "btn btn-sm btn-success w-100";
+                
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.className = "btn btn-sm btn-wine w-100";
+                    btn.disabled = false;
+                }, 2000);
+            }, 800);
+        }
+    </script>
 </body>
 </html>
