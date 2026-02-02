@@ -20,7 +20,7 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f8f9fa; /* Clean White/Grey Background */
+            background-color: #f8f9fa;
             color: var(--text-dark);
             overflow-x: hidden;
         }
@@ -40,13 +40,14 @@
         .nav-link:hover { color: var(--primary-wine) !important; }
         .nav-link.active { color: var(--primary-wine) !important; font-weight: 600; }
 
-        /* Red Glass Card */
+        /* Glass Card */
         .glass-card {
             background: #ffffff;
             border: 1px solid var(--glass-border);
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(128, 0, 32, 0.05);
             transition: all 0.3s ease;
+            height: 100%;
         }
 
         /* Form Styling */
@@ -98,10 +99,17 @@
             border-color: white;
         }
 
-        .contact-icon {
-            font-size: 1.5rem;
-            color: var(--primary-wine);
+        .contact-icon-box {
+            width: 50px;
+            height: 50px;
+            background: rgba(100, 160, 200, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             margin-right: 15px;
+            color: var(--primary-wine);
+            font-size: 1.2rem;
         }
 
         .map-wrapper {
@@ -109,10 +117,9 @@
             overflow: hidden;
             border: 2px solid var(--primary-wine);
             height: 100%;
-            min-height: 450px;
+            min-height: 400px;
         }
 
-        /* Footer */
         footer {
             background: var(--primary-wine);
             color: #ffffff;
@@ -120,35 +127,13 @@
             margin-top: 50px;
         }
 
-        footer .text-secondary {
-            color: rgba(255,255,255,0.7) !important;
-        }
-
+        footer .text-secondary { color: rgba(255,255,255,0.7) !important; }
         .footer-link {
             color: rgba(255,255,255,0.8);
             text-decoration: none;
             transition: 0.3s;
         }
-
-        .footer-link:hover {
-            color: #ffffff;
-            padding-left: 5px;
-        }
-
-        .btn-outline-white {
-            border: 1px solid #ffffff;
-            color: #ffffff;
-            border-radius: 50px;
-            padding: 10px 20px;
-            text-decoration: none;
-            display: inline-block;
-            text-align: center;
-        }
-
-        .btn-outline-white:hover {
-            background: #ffffff;
-            color: var(--primary-wine);
-        }
+        .footer-link:hover { color: #ffffff; padding-left: 5px; }
     </style>
 </head>
 <body>
@@ -179,37 +164,86 @@
             <p class="lead">Reliable logistics solutions, personalized for your business.</p>
         </div>
 
-        <div class="row g-5">
-            <div class="col-lg-6" data-aos="fade-right">
-                <div class="glass-card p-4 p-md-5">
-                    <h3 class="mb-4" style="color: var(--primary-wine);">Send Us a Message</h3>
-                    <form>
-                        <div class="mb-3">
-                            <label class="form-label fw-600">Full Name</label>
-                            <input type="text" class="form-control" placeholder="Enter your name">
+        <div class="row g-4 mb-5">
+            <div class="col-lg-5" data-aos="fade-right">
+                <div class="glass-card p-4">
+                    <h3 class="mb-4" style="color: var(--primary-wine);">Company Contact</h3>
+                    
+                    <div class="d-flex align-items-start mb-4">
+                        <div class="contact-icon-box"><i class="bi bi-geo-alt-fill"></i></div>
+                        <div>
+                            <h6 class="fw-bold mb-1">Office Address</h6>
+                            <p class="text-muted mb-0">Shop 6 blue plaza, Lagos, Nigeria</p>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label fw-600">Email Address</label>
-                            <input type="email" class="form-control" placeholder="email@company.com">
+                    </div>
+
+                    <div class="d-flex align-items-start mb-4">
+                        <div class="contact-icon-box"><i class="bi bi-telephone-fill"></i></div>
+                        <div>
+                            <h6 class="fw-bold mb-1">Phone Number</h6>
+                            <p class="text-muted mb-0">07015541128</p>
                         </div>
-                        <div class="mb-4">
-                            <label class="form-label fw-600">Message</label>
-                            <textarea class="form-control" rows="5" placeholder="Tell us about your logistics needs..."></textarea>
+                    </div>
+
+                    <div class="d-flex align-items-start mb-4">
+                        <div class="contact-icon-box"><i class="bi bi-envelope-fill"></i></div>
+                        <div>
+                            <h6 class="fw-bold mb-1">Email Address</h6>
+                            <p class="text-muted mb-0">okaroonyeka@gmail.com</p>
                         </div>
-                        <button type="submit" class="btn btn-wine w-100 py-3">Send Message</button>
-                    </form>
+                    </div>
+
+                    <div class="d-flex align-items-start">
+                        <div class="contact-icon-box"><i class="bi bi-clock-fill"></i></div>
+                        <div>
+                            <h6 class="fw-bold mb-1">Business Hours</h6>
+                            <p class="text-muted mb-0">Mon - Sat: 8:00 AM - 6:00 PM</p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="col-lg-6" data-aos="fade-left">
+            <div class="col-lg-7" data-aos="fade-left">
                 <div class="map-wrapper">
                     <iframe 
                         width="100%" 
                         height="100%" 
                         frameborder="0" 
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3964.536767554378!2d3.2141543!3d6.4534443!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103b8655e0c5108b%3A0x86c71c4c9b986b!2sBlue%20Plaza!5e0!3m2!1sen!2sng!4v1700000000000" 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126844.06348603372!2d3.33314!3d6.524379!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103b8b2ae68280c1%3A0xdc9e87a3da57810!2sLagos!5e0!3m2!1sen!2sng!4v1700000000000" 
                         allowfullscreen>
                     </iframe>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" data-aos="fade-up">
+            <div class="col-12">
+                <div class="glass-card p-4 p-md-5">
+                    <div class="row">
+                        <div class="col-lg-4 mb-4 mb-lg-0">
+                            <h3 style="color: var(--primary-wine);">Send Us a Message</h3>
+                            <p class="text-muted">Have a specific inquiry? Fill out the form and our team will get back to you within 24 hours.</p>
+                        </div>
+                        <div class="col-lg-8">
+                            <form>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label fw-bold">Full Name</label>
+                                        <input type="text" class="form-control" placeholder="Enter your name">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label fw-bold">Email Address</label>
+                                        <input type="email" class="form-control" placeholder="email@company.com">
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label fw-bold">Message</label>
+                                    <textarea class="form-control" rows="4" placeholder="Tell us about your logistics needs..."></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-wine px-5">Send Message</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -242,7 +276,7 @@
                 <div class="col-lg-4 col-md-6">
                     <h5 class="fw-bold mb-4">Our Location</h5>
                     <div style="height: 150px; border-radius: 10px; overflow: hidden; border: 1px solid rgba(255,255,255,0.3);">
-                        <iframe width="100%" height="100%" frameborder="0" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3964.536767554378!2d3.2141543!3d6.4534443!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103b8655e0c5108b%3A0x86c71c4c9b986b!2sBlue%20Plaza!5e0!3m2!1sen!2sng!4v1700000000000"></iframe>
+                        <iframe width="100%" height="100%" frameborder="0" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126844.06348603372!2d3.33314!3d6.524379!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103b8b2ae68280c1%3A0xdc9e87a3da57810!2sLagos!5e0!3m2!1sen!2sng!4v1700000000000"></iframe>
                     </div>
                 </div>
             </div>

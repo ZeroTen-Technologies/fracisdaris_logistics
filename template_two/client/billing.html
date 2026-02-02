@@ -61,6 +61,26 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.05); 
         }
         
+        /* PENDING INVOICE SPECIFIC */
+        .pending-invoice-card {
+            background: #fff;
+            border: 2px solid var(--primary-wine);
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+        .pending-tag {
+            background: var(--primary-wine);
+            color: white;
+            padding: 4px 15px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            border-radius: 0 0 0 10px;
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+
         .balance-card {
             background: linear-gradient(135deg, #87CEEB 0%, #64A0C8 100%);
             color: white;
@@ -91,39 +111,44 @@
     <div class="main-content">
         <h3 class="fw-bold mb-4">Transactions</h3>
 
-        <!-- <div class="row g-4 mb-4">
-            <div class="col-md-7">
-                <div class="card balance-card p-4 shadow-sm h-100">
-                    <div class="row align-items-center">
-                        <div class="col-sm-8">
-                            <p class="text-white-50 small mb-1">Total Outstanding Balance</p>
-                            <h1 class="fw-bold mb-3">₦125,500.00</h1>
-                            <div class="d-flex gap-2">
-                                <button class="btn btn-light text-wine fw-bold px-4" data-bs-toggle="modal" data-bs-target="#paymentModal">Pay Now</button>
-                                <button class="btn btn-outline-light px-4">Download Statement</button>
+        <div class="mb-5">
+            <h5 class="fw-bold mb-3 d-flex align-items-center">
+                <i class="bi bi- hourglass-split me-2 text-primary"></i> Pending Payments
+            </h5>
+            <div class="row g-4">
+                <div class="col-md-8 col-lg-6">
+                    <div class="card pending-invoice-card p-4 shadow-sm">
+                        <div class="pending-tag text-uppercase">Agreed Quote</div>
+                        
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div>
+                                <h6 class="text-muted small mb-1">Invoice #INV-2026-03-PEND</h6>
+                                <h4 class="fw-bold mb-0 text-primary">₦115,000.00</h4>
+                            </div>
+                            <div class="text-end">
+                                <span class="badge bg-primary-subtle text-primary border border-primary-subtle">Awaiting Payment</span>
                             </div>
                         </div>
-                        <div class="col-sm-4 text-center d-none d-sm-block">
-                            <i class="bi bi-wallet2 display-1 opacity-25"></i>
+
+                        <div class="bg-light rounded-3 p-3 mb-4">
+                            <h6 class="small fw-bold border-bottom pb-2 mb-2">Package Details</h6>
+                            <div class="row g-2">
+                                <div class="col-6 small"><strong>Item:</strong> Heavy Machinery Parts</div>
+                                <div class="col-6 small"><strong>Weight:</strong> 250kg</div>
+                                <div class="col-6 small"><strong>Route:</strong> Lagos → Port Harcourt</div>
+                                <div class="col-6 small"><strong>Service:</strong> Express Road</div>
+                            </div>
+                        </div>
+
+                        <div class="d-grid">
+                            <button class="btn btn-wine fw-bold py-2 shadow-sm">
+                                <i class="bi bi-credit-card-2-back me-2"></i>Proceed to Payment
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-5">
-                <div class="card invoice-card p-4 h-100">
-                    <h6 class="fw-bold text-muted mb-3">Billing Methods</h6>
-                    <div class="d-flex align-items-center mb-3 p-2 border rounded">
-                        <i class="bi bi-credit-card-2-front fs-3 me-3 text-primary"></i>
-                        <div>
-                            <p class="mb-0 fw-bold small">Visa ending in 4242</p>
-                            <p class="mb-0 text-muted smaller" style="font-size: 0.75rem;">Expires 12/26</p>
-                        </div>
-                        <span class="badge bg-light text-dark ms-auto">Primary</span>
-                    </div>
-                    <button class="btn btn-outline-dark btn-sm w-100">+ Add New Method</button>
-                </div>
-            </div>
-        </div> -->
+        </div>
 
         <div class="card invoice-card p-4">
             <div class="d-flex justify-content-between align-items-center mb-4">
@@ -198,12 +223,12 @@
                 </div>
                 <div class="modal-body p-4">
                     <div class="row mb-4">
-                        <div class="col-6"><p class="small text-muted mb-0">Storage Fees (Service 1)</p><h6 class="fw-bold">₦0.00 (Free)</h6></div>
-                        <div class="col-6 text-end"><p class="small text-muted mb-0">Packaging Fees (Service 2)</p><h6 class="fw-bold">₦15,000.00</h6></div>
+                        <div class="col-6"><p class="small text-muted mb-0">Storage Fees</p><h6 class="fw-bold">₦0.00 (Free)</h6></div>
+                        <div class="col-6 text-end"><p class="small text-muted mb-0">Packaging Fees</p><h6 class="fw-bold">₦15,000.00</h6></div>
                     </div>
                     <div class="row mb-4">
-                        <div class="col-6"><p class="small text-muted mb-0">Delivery Charges (Service 3)</p><h6 class="fw-bold">₦30,000.00</h6></div>
-                        <div class="col-6 text-end"><p class="small text-muted mb-0">Payment Processing (Service 4)</p><h6 class="fw-bold">₦0.00</h6></div>
+                        <div class="col-6"><p class="small text-muted mb-0">Delivery Charges</p><h6 class="fw-bold">₦30,000.00</h6></div>
+                        <div class="col-6 text-end"><p class="small text-muted mb-0">Payment Processing</p><h6 class="fw-bold">₦0.00</h6></div>
                     </div>
                     <hr>
                     <div class="d-flex justify-content-between align-items-center">

@@ -57,7 +57,7 @@
         /* Hero Section */
         .hero-section {
             height: 90vh;
-            background: linear-gradient(rgba(70, 130, 180, 0.4), rgba(135, 206, 235, 0.4)), 
+            background: linear-gradient(rgba(25, 25, 112, 0.7), rgba(135, 206, 235, 0.4)), 
                         url('images/61190.png');
             background-size: cover;
             background-position: center;
@@ -415,7 +415,7 @@
                             </div>
                             <div class="col-md-4">
                                 <label class="small fw-semibold">Distance (km)</label>
-                                <input type="number" class="form-control border-0 shadow-sm" id="calcDistance" placeholder="0" min="1" required>
+                                <input type="number" class="form-control border-0 shadow-sm" id="calcDistance" placeholder="0" min="1">
                             </div>
                         </div>
                     </div>
@@ -442,25 +442,25 @@
                             </div>
                             <div class="col-12">
                                 <label class="small fw-semibold">Delivery Address</label>
-                                <textarea class="form-control bg-light border-0" rows="2" placeholder="Enter full address"></textarea>
+                                <textarea class="form-control bg-light border-0" rows="2" placeholder="Enter full address" required></textarea>
                             </div>
                         </div>
                     </div>
 
-                    <div class="p-4 rounded-4 text-white shadow-sm d-flex justify-content-between align-items-center" style="background: var(--primary-blue);">
-                        <div>
+                    <div class="p-4 rounded-4 text-white shadow-sm d-flex justify-content-center align-items-center" style="background: var(--primary-blue);">
+                        <!-- <div>
                             <p class="small mb-0 opacity-75">Estimated Quote</p>
                             <h3 class="fw-bold mb-0">₦<span id="calcTotal">0.00</span></h3>
-                        </div>
+                        </div> -->
                         <button type="submit" class="btn btn-light rounded-pill px-4 fw-bold" style="color: var(--primary-blue);">
-                            Book Order Now
+                            Request For Quotation
                         </button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-</div>
+    </div>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -505,7 +505,7 @@
 
         document.getElementById('homepageOrderForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            alert('Your quote and order have been submitted! Fracisdaris Logistics will contact you shortly to confirm pickup.');
+            alert('Your quote and order have been submitted! Fracisdaris Logistics will contact you shortly to confirm price and pickup.');
             bootstrap.Modal.getInstance(document.getElementById('quoteModal')).hide();
         });
     });
