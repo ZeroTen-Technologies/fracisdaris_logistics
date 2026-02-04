@@ -9,13 +9,13 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <style>
         :root { 
-             --primary-wine: #3399FF;
+            --primary-wine: #3399FF;
             --sidebar-width: 260px; 
             --bg-light: #f4f6f9;
         }
-        body { font-family: 'Inter', sans-serif; background-color: var(--bg-light); }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-light); overflow-x: hidden; }
 
-        /* UNIFORM SIDEBAR STYLES */
+        /* SIDEBAR ARCHITECTURE */
         .sidebar { 
             width: var(--sidebar-width); 
             height: 100vh; 
@@ -25,7 +25,8 @@
             background-color: var(--primary-wine); 
             color: white; 
             padding-top: 20px; 
-            z-index: 1000; 
+            z-index: 1050; 
+            transition: all 0.3s ease;
         }
         .sidebar-brand {
             padding: 0 20px 30px;
@@ -49,39 +50,102 @@
             border-left: 4px solid white; 
         }
 
+        .mobile-header {
+           display: none;
+            background: white;
+            padding: 15px 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            align-items: center;
+        }
+
+        /* MOBILE MENU OVERLAY */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1050;
+        }
+
         /* CONTENT AREA */
-        .main-content { margin-left: var(--sidebar-width); padding: 30px; }
+        .main-content { margin-left: var(--sidebar-width); padding: 30px; transition: all 0.3s ease; }
+        
         .stat-card {
             border: none;
             border-radius: 15px;
             transition: transform 0.2s;
+            background: white;
         }
         .stat-card:hover { transform: translateY(-5px); }
-        .report-chart-placeholder {
+        
+        .report-chart-container {
             height: 300px;
             background: #ffffff;
             border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px dashed #dee2e6;
+            position: relative;
+            padding: 20px;
         }
-        .btn-wine { background: var(--primary-wine); color: white; border: none; }
-        .btn-wine:hover { background: #87CEEB; color: white; }
+
+        /* Dummy Bar Chart Simulation */
+        .bar-chart-sim {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            height: 100%;
+            gap: 10px;
+        }
+        .bar {
+            width: 15%;
+            background: var(--primary-wine);
+            border-radius: 5px 5px 0 0;
+            transition: height 1s ease-in-out;
+            position: relative;
+        }
+        .bar::after {
+            content: attr(data-label);
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 10px;
+            color: #666;
+        }
+
+        .btn-wine { background: var(--primary-wine); color: white; border: none; padding: 10px 20px; border-radius: 8px; }
+        .btn-wine:hover { background: #267acc; color: white; }
+
+        @media (max-width: 991.98px) {
+            .sidebar { left: calc(-1 * var(--sidebar-width)); }
+            .sidebar.active { left: 0; }
+            .sidebar-overlay.active { display: block; }
+            .main-content { margin-left: 0; padding: 20px; }
+            .mobile-header { display: flex; justify-content: space-between; align-items: center; }
+        }
+
+        @media print {
+            .sidebar, .btn-wine, .nav-link { display: none !important; }
+            .main-content { margin-left: 0 !important; width: 100%; }
+            .stat-card { border: 1px solid #eee !important; box-shadow: none !important; }
+        }
     </style>
 </head>
 <body>
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
-    <div class="sidebar">
-        <div class="sidebar-brand text-uppercase">
-            <i class="bi bi-box-seam me-2"></i> Fracisdaris
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-brand text-uppercase d-flex justify-content-between align-items-center">
+            <span><i class="bi bi-box-seam me-2"></i> Fracisdaris</span>
+            <button class="btn text-white d-lg-none" onclick="toggleSidebar()"><i class="bi bi-x-lg"></i></button>
         </div>
         <nav class="nav flex-column">
             <a class="nav-link" href="dashboard.html"><i class="bi bi-speedometer2"></i> Overview</a>
             <a class="nav-link" href="inventory.html"><i class="bi bi-archive"></i> Inventory</a>
             <a class="nav-link" href="orders.html"><i class="bi bi-truck"></i> Orders</a>
             <a class="nav-link active" href="reports.html"><i class="bi bi-bar-chart"></i> Reports</a>
-            <a class="nav-link" href="billing.html"><i class="bi bi-credit-card"></i> Transactions</a>
+            <a class="nav-link" href="transaction.html"><i class="bi bi-credit-card"></i> Transactions</a>
             <hr class="mx-3 opacity-25">
             <a class="nav-link" href="account.html"><i class="bi bi-person-gear"></i> Account</a>
             <a class="nav-link" href="support.html"><i class="bi bi-headset"></i> Support</a>
@@ -89,11 +153,18 @@
         </nav>
     </div>
 
+    <div class="mobile-header">
+                <button class="btn btn-outline-primary btn-sm" onclick="toggleSidebar()">
+                    <i class="bi bi-list fs-4"></i>
+                </button>
+                <h5 class="mb-0 fw-bold text-primary">Reports</h5>
+            </div>
+
     <div class="main-content">
-        <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
             <div>
                 <h3 class="fw-bold mb-0">Analytics & Reports</h3>
-                <p class="text-muted">Performance tracking for Jan 2026</p>
+                <p class="text-muted">Performance tracking for February 2026</p>
             </div>
             <button class="btn btn-wine shadow-sm" onclick="window.print()">
                 <i class="bi bi-printer me-2"></i>Download PDF Report
@@ -106,9 +177,9 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <h6 class="text-muted small text-uppercase fw-bold">Success Rate</h6>
-                            <h3 class="fw-bold">94.2%</h3>
+                            <h3 class="fw-bold text-success">94.2%</h3>
                         </div>
-                        <div class="icon-box bg-success-subtle text-success p-2 rounded">
+                        <div class="bg-success-subtle text-success p-2 rounded">
                             <i class="bi bi-check2-circle fs-4"></i>
                         </div>
                     </div>
@@ -121,7 +192,7 @@
                             <h6 class="text-muted small text-uppercase fw-bold">Avg. Prep Time</h6>
                             <h3 class="fw-bold">4.2h</h3>
                         </div>
-                        <div class="icon-box bg-primary-subtle text-primary p-2 rounded">
+                        <div class="bg-primary-subtle text-primary p-2 rounded">
                             <i class="bi bi-clock-history fs-4"></i>
                         </div>
                     </div>
@@ -134,7 +205,7 @@
                             <h6 class="text-muted small text-uppercase fw-bold">Total Sales</h6>
                             <h3 class="fw-bold">₦2.4M</h3>
                         </div>
-                        <div class="icon-box bg-warning-subtle text-warning p-2 rounded">
+                        <div class="bg-warning-subtle text-warning p-2 rounded">
                             <i class="bi bi-cash-stack fs-4"></i>
                         </div>
                     </div>
@@ -145,9 +216,9 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <h6 class="text-muted small text-uppercase fw-bold">Returns</h6>
-                            <h3 class="fw-bold">12</h3>
+                            <h3 class="fw-bold text-danger">12</h3>
                         </div>
-                        <div class="icon-box bg-danger-subtle text-danger p-2 rounded">
+                        <div class="bg-danger-subtle text-danger p-2 rounded">
                             <i class="bi bi-arrow-return-left fs-4"></i>
                         </div>
                     </div>
@@ -155,35 +226,59 @@
             </div>
         </div>
 
-        <div class="row mb-4">
+        <div class="row mb-4 g-4">
             <div class="col-lg-8">
                 <div class="card border-0 shadow-sm p-4 rounded-4 h-100">
-                    <h6 class="fw-bold mb-4">Delivery Performance (Volume vs Success)</h6>
-                    
-                    <div class="report-chart-placeholder">
-                        <p class="text-muted italic small text-center px-5">Integrated Chart Visualization would render here showing weekly delivery spikes at your Lagos Hub.</p>
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h6 class="fw-bold mb-0">Delivery Performance (Weekly Volume)</h6>
+                        <select class="form-select form-select-sm w-auto">
+                            <option>Last 7 Days</option>
+                            <option>Last 30 Days</option>
+                        </select>
                     </div>
+                    
+                    <div class="report-chart-container">
+                        <div class="bar-chart-sim">
+                            <div class="bar" style="height: 40%" data-label="Mon"></div>
+                            <div class="bar" style="height: 65%" data-label="Tue"></div>
+                            <div class="bar" style="height: 50%" data-label="Wed"></div>
+                            <div class="bar" style="height: 85%" data-label="Thu"></div>
+                            <div class="bar" style="height: 95%" data-label="Fri"></div>
+                            <div class="bar" style="height: 30%" data-label="Sat"></div>
+                            <div class="bar" style="height: 20%" data-label="Sun"></div>
+                        </div>
+                    </div>
+                    <p class="text-muted small mt-4 italic"><i class="bi bi-info-circle me-1"></i> Data reflects combined volume from Lagos Hub and Mainland pickups.</p>
                 </div>
             </div>
+            
             <div class="col-lg-4">
                 <div class="card border-0 shadow-sm p-4 rounded-4 h-100">
                     <h6 class="fw-bold mb-4">Service Popularity</h6>
                     <div class="list-group list-group-flush">
                         <div class="list-group-item d-flex justify-content-between align-items-center border-0 px-0">
-                            <span><i class="bi bi-p-square-fill text-primary me-2"></i> Park Pickup</span>
-                            <span class="badge bg-light text-dark">45%</span>
+                            <span><i class="bi bi-circle-fill text-primary me-2 small"></i> Park Pickup</span>
+                            <span class="fw-bold">45%</span>
                         </div>
+                        <div class="progress mb-3" style="height: 8px;">
+                            <div class="progress-bar" style="width: 45%"></div>
+                        </div>
+
                         <div class="list-group-item d-flex justify-content-between align-items-center border-0 px-0">
-                            <span><i class="bi bi-box-seam text-wine me-2"></i> Custom Packaging</span>
-                            <span class="badge bg-light text-dark">30%</span>
+                            <span><i class="bi bi-circle-fill text-info me-2 small"></i> Custom Packaging</span>
+                            <span class="fw-bold">30%</span>
                         </div>
+                        <div class="progress mb-3" style="height: 8px;">
+                            <div class="progress-bar bg-info" style="width: 30%"></div>
+                        </div>
+
                         <div class="list-group-item d-flex justify-content-between align-items-center border-0 px-0">
-                            <span><i class="bi bi-truck text-success me-2"></i> Last Mile Delivery</span>
-                            <span class="badge bg-light text-dark">25%</span>
+                            <span><i class="bi bi-circle-fill text-success me-2 small"></i> Last Mile</span>
+                            <span class="fw-bold">25%</span>
                         </div>
-                    </div>
-                    <div class="mt-4 text-center">
-                        
+                        <div class="progress mb-3" style="height: 8px;">
+                            <div class="progress-bar bg-success" style="width: 25%"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -223,6 +318,12 @@
         </div>
     </div>
 
+<script>
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('active');
+            document.getElementById('sidebarOverlay').classList.toggle('active');
+        }
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

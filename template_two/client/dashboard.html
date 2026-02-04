@@ -10,7 +10,7 @@
     
     <style>
         :root {
-             --primary-wine: #3399FF;
+            --primary-wine: #3399FF;
             --accent-red: #87CEEB;
             --sidebar-width: 260px;
             --bg-light: #f8f9fa;
@@ -21,7 +21,7 @@
             background-color: var(--bg-light);
         }
 
-        /* Sidebar Styling */
+        /* Sidebar Styling with Mobile Responsiveness */
         .sidebar {
             width: var(--sidebar-width);
             height: 100vh;
@@ -31,7 +31,7 @@
             background-color: var(--primary-wine);
             color: white;
             padding-top: 20px;
-            z-index: 1000;
+            z-index: 1050; /* Higher than top-nav */
             transition: all 0.3s;
         }
 
@@ -59,10 +59,11 @@
             border-left: 4px solid white;
         }
 
-        /* Main Content */
+        /* Responsive Main Content */
         .main-content {
             margin-left: var(--sidebar-width);
             padding: 30px;
+            transition: all 0.3s;
         }
 
         .top-nav {
@@ -73,6 +74,9 @@
             justify-content: space-between;
             align-items: center;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
         .metric-card {
@@ -82,6 +86,7 @@
             border: none;
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
             transition: 0.3s;
+            height: 100%;
         }
 
         .metric-card:hover { transform: translateY(-5px); }
@@ -113,42 +118,84 @@
             border-left: 5px solid #ffc107;
             background: white;
         }
+
+        /* MOBILE OVERRIDES */
+        @media (max-width: 991.98px) {
+            .sidebar {
+                left: calc(-1 * var(--sidebar-width));
+            }
+            .sidebar.active {
+                left: 0;
+            }
+            .main-content {
+                margin-left: 0;
+                padding: 15px;
+            }
+            .top-nav {
+                margin: -15px -15px 30px -15px;
+                padding: 10px 15px;
+            }
+            .search-bar {
+                display: none; /* Hide wide search on mobile to save space */
+            }
+            .sidebar-overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.5);
+                z-index: 1040;
+            }
+            .sidebar-overlay.active {
+                display: block;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <div class="sidebar">
-        <div class="sidebar-brand text-uppercase">
-            <i class="bi bi-box-seam me-2"></i> Fracisdaris
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-brand text-uppercase d-flex justify-content-between align-items-center">
+            <span><i class="bi bi-box-seam me-2"></i> Fracisdaris</span>
+            <button class="btn text-white d-lg-none" onclick="toggleSidebar()"><i class="bi bi-x-lg"></i></button>
         </div>
         <nav class="nav flex-column">
             <a class="nav-link active" href="dashboard.html"><i class="bi bi-speedometer2"></i> Overview</a>
             <a class="nav-link" href="inventory.html"><i class="bi bi-archive"></i> Inventory</a>
             <a class="nav-link" href="orders.html"><i class="bi bi-truck"></i> Orders</a>
             <a class="nav-link" href="reports.html"><i class="bi bi-bar-chart"></i> Reports</a>
-            <a class="nav-link" href="billing.html"><i class="bi bi-credit-card"></i> Transactions</a>
+            <a class="nav-link" href="transaction.html"><i class="bi bi-credit-card"></i> Transactions</a>
             <hr class="mx-3 opacity-25">
             <a class="nav-link" href="account.html"><i class="bi bi-person-gear"></i> Account</a>
             <a class="nav-link" href="support.html"><i class="bi bi-headset"></i> Support</a>
-            <a class="nav-link text-danger mt-5" href="login.html"><i class="bi bi-box-arrow-left"></i> Logout</a>
+            <a class="nav-link text-danger mt-md-5" href="login.html"><i class="bi bi-box-arrow-left"></i> Logout</a>
         </nav>
     </div>
 
     <div class="main-content">
         <div class="top-nav">
-            <div class="search-bar w-50">
+            <button class="btn btn-outline-primary btn-sm" onclick="toggleSidebar()">
+                    <i class="bi bi-list fs-4"></i>
+                </button>
+
+            <div class="search-bar w-50 d-none d-lg-block">
                 <div class="input-group">
                     <span class="input-group-text bg-light border-0"><i class="bi bi-search"></i></span>
                     <input type="text" class="form-control bg-light border-0" placeholder="Search orders or SKUs...">
                 </div>
             </div>
-            <div class="user-profile d-flex align-items-center">
+            
+            <div class="user-profile d-flex align-items-center ms-auto">
                 <div class="dropdown">
-                    <button class="btn border-0 dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                        <i class="bi bi-bell me-3 position-relative">
+                    <button class="btn border-0 dropdown-toggle px-0" type="button" data-bs-toggle="dropdown">
+                        <i class="bi bi-bell me-2 position-relative">
                             <span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle"></span>
                         </i>
-                        <strong>John Doe</strong>
+                        <strong class="d-none d-sm-inline">John Doe</strong>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end shadow border-0">
                         <li><a class="dropdown-item" href="account.html">Profile</a></li>
@@ -160,48 +207,48 @@
 
         <h3 class="fw-bold mb-4">Dashboard Overview</h3>
 
-        <div class="row g-4 mb-5">
-            <div class="col-md-3">
+        <div class="row g-3 g-md-4 mb-5">
+            <div class="col-6 col-md-3">
                 <div class="metric-card">
-                    <div class="d-flex justify-content-between">
+                    <div class="d-flex flex-column flex-md-row justify-content-between">
                         <div>
                             <p class="text-muted small mb-1">Total SKUs</p>
-                            <h3 class="fw-bold">142</h3>
+                            <h3 class="fw-bold mb-0">142</h3>
                         </div>
-                        <div class="metric-icon"><i class="bi bi-tags"></i></div>
+                        <div class="metric-icon mt-2 mt-md-0"><i class="bi bi-tags"></i></div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-6 col-md-3">
                 <div class="metric-card">
-                    <div class="d-flex justify-content-between">
+                    <div class="d-flex flex-column flex-md-row justify-content-between">
                         <div>
                             <p class="text-muted small mb-1">Stock Value</p>
-                            <h3 class="fw-bold">₦4.2M</h3>
+                            <h4 class="fw-bold mb-0">₦4.2M</h4>
                         </div>
-                        <div class="metric-icon"><i class="bi bi-currency-exchange"></i></div>
+                        <div class="metric-icon mt-2 mt-md-0"><i class="bi bi-currency-exchange"></i></div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-6 col-md-3">
                 <div class="metric-card">
-                    <div class="d-flex justify-content-between">
+                    <div class="d-flex flex-column flex-md-row justify-content-between">
                         <div>
                             <p class="text-muted small mb-1">Orders Shipped</p>
-                            <h3 class="fw-bold">18 Today</h3>
+                            <h4 class="fw-bold mb-0">18 Today</h4>
                         </div>
-                        <div class="metric-icon"><i class="bi bi-check-circle"></i></div>
+                        <div class="metric-icon mt-2 mt-md-0"><i class="bi bi-check-circle"></i></div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-6 col-md-3">
                 <div class="metric-card border-start border-danger border-4">
-                    <div class="d-flex justify-content-between">
+                    <div class="d-flex flex-column flex-md-row justify-content-between">
                         <div>
                             <p class="text-muted small mb-1">Pending Orders</p>
-                            <h3 class="fw-bold">07</h3>
+                            <h3 class="fw-bold mb-0">07</h3>
                         </div>
-                        <div class="metric-icon text-danger"><i class="bi bi-hourglass-split"></i></div>
+                        <div class="metric-icon mt-2 mt-md-0 text-danger"><i class="bi bi-hourglass-split"></i></div>
                     </div>
                 </div>
             </div>
@@ -209,7 +256,7 @@
 
         <div class="row g-4">
             <div class="col-lg-8">
-                <div class="card border-0 shadow-sm p-4 rounded-4 mb-4">
+                <div class="card border-0 shadow-sm p-3 p-md-4 rounded-4 mb-4">
                     <h5 class="fw-bold mb-4">Recent Activity Feed</h5>
                     <div class="table-responsive">
                         <table class="table table-hover align-middle">
@@ -224,17 +271,17 @@
                                 <tr>
                                     <td><i class="bi bi-truck me-2 text-primary"></i> Shipment #FD-9921 Delivered</td>
                                     <td><span class="badge bg-success">Success</span></td>
-                                    <td class="small text-muted">2 mins ago</td>
+                                    <td class="small text-muted">2m</td>
                                 </tr>
                                 <tr>
-                                    <td><i class="bi bi-plus-circle me-2 text-success"></i> New stock received for SKU: WN-22</td>
+                                    <td><i class="bi bi-plus-circle me-2 text-success"></i> New stock: WN-22</td>
                                     <td><span class="badge bg-info">Stock In</span></td>
-                                    <td class="small text-muted">1 hour ago</td>
+                                    <td class="small text-muted">1h</td>
                                 </tr>
                                 <tr>
-                                    <td><i class="bi bi-exclamation-triangle me-2 text-warning"></i> Shipment exception #FD-9900</td>
+                                    <td><i class="bi bi-exclamation-triangle me-2 text-warning"></i> Exception #FD-9900</td>
                                     <td><span class="badge bg-warning">Review</span></td>
-                                    <td class="small text-muted">3 hours ago</td>
+                                    <td class="small text-muted">3h</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -310,6 +357,12 @@
         </div>
     </div>
 
+    <script>
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('active');
+            document.getElementById('sidebarOverlay').classList.toggle('active');
+        }
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

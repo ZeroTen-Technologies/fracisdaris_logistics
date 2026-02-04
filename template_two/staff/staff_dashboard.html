@@ -14,7 +14,7 @@
             --sidebar-width: 260px; 
             --bg-light: #f4f7f6;
         }
-        body { font-family: 'Inter', sans-serif; background-color: var(--bg-light); }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-light); margin: 0; }
 
         /* SCROLLABLE STAFF SIDEBAR */
         .sidebar { 
@@ -26,10 +26,11 @@
             background-color: var(--admin-navy); 
             color: white; 
             padding-top: 20px; 
-            z-index: 1000; 
+            z-index: 1100; 
             overflow-y: auto;
             display: flex;
             flex-direction: column;
+            transition: all 0.3s ease;
         }
 
         .sidebar::-webkit-scrollbar { width: 5px; }
@@ -59,12 +60,45 @@
         .section-label {
             padding: 20px 25px 10px;
             font-size: 0.7rem;
-            text-uppercase;
+            text-transform: uppercase;
             color: rgba(255,255,255,0.4);
             letter-spacing: 1px;
         }
 
-        .main-content { margin-left: var(--sidebar-width); padding: 30px; }
+        /* CONTENT AREA */
+        .main-content { 
+            margin-left: var(--sidebar-width); 
+            padding: 30px; 
+            transition: all 0.3s ease;
+        }
+
+        /* MOBILE HEADER & OVERLAY */
+        .mobile-header {
+            display: none;
+            background: var(--admin-navy);
+            color: white;
+            padding: 15px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1050;
+        }
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 1090;
+        }
+
+        /* RESPONSIVE BREAKPOINT */
+        @media (max-width: 992px) {
+            .sidebar { left: -260px; }
+            .sidebar.active { left: 0; }
+            .main-content { margin-left: 0; padding: 20px; }
+            .mobile-header { display: flex; justify-content: space-between; align-items: center; }
+            .sidebar-overlay.active { display: block; }
+        }
+
         .stat-card { border: none; border-radius: 12px; padding: 20px; transition: 0.3s; }
         .capacity-bar { height: 8px; border-radius: 5px; background: #eee; overflow: hidden; }
         .capacity-fill { height: 100%; background: var(--primary-wine); }
@@ -72,9 +106,19 @@
 </head>
 <body>
 
-    <div class="sidebar">
-        <div class="sidebar-brand text-uppercase d-flex align-items-center">
-            <i class="bi bi-shield-lock-fill me-2 text-danger"></i> FRACISDARIS STAFF
+    <div class="mobile-header">
+        <span class="fw-bold small">STAFF PORTAL</span>
+        <button class="btn btn-outline-light btn-sm" id="menuToggle">
+            <i class="bi bi-list fs-4"></i>
+        </button>
+    </div>
+
+    <div class="sidebar-overlay" id="overlay"></div>
+
+    <div class="sidebar" id="sidebarMenu">
+        <div class="sidebar-brand text-uppercase d-flex justify-content-between align-items-center">
+            <span><i class="bi bi-shield-lock-fill me-2 text-danger"></i> FRACISDARIS STAFF</span>
+            <button class="btn btn-sm text-white d-lg-none" id="menuClose"><i class="bi bi-x-lg"></i></button>
         </div>
         <nav class="nav flex-column">
             <a class="nav-link active" href="staff_dashboard.html"><i class="bi bi-grid-1x2"></i> Facility Health</a>
@@ -98,10 +142,10 @@
     </div>
 
     <div class="main-content">
-        <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
             <div>
                 <h3 class="fw-bold mb-0">Facility Overview</h3>
-                <p class="text-muted">Lagos Main Distribution Center - Hub A</p>
+                <p class="text-muted mb-0">Lagos Main Distribution Center - Hub A</p>
             </div>
             <div class="text-end">
                 <button class="btn btn-outline-dark btn-sm me-2"><i class="bi bi-printer"></i> Daily Summary</button>
@@ -110,28 +154,28 @@
         </div>
 
         <div class="row g-4 mb-4">
-            <div class="col-md-3">
+            <div class="col-sm-6 col-md-3">
                 <div class="card stat-card shadow-sm bg-white">
                     <span class="text-muted small">Total Active Clients</span>
                     <h2 class="fw-bold mb-0">142</h2>
                     <span class="text-success small"><i class="bi bi-arrow-up"></i> 4 new this week</span>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-sm-6 col-md-3">
                 <div class="card stat-card shadow-sm bg-white">
                     <span class="text-muted small">Pending Put-away</span>
                     <h2 class="fw-bold mb-0 text-warning">28</h2>
                     <span class="text-muted small">Needs attention</span>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-sm-6 col-md-3">
                 <div class="card stat-card shadow-sm bg-white">
                     <span class="text-muted small">Outbound Today</span>
                     <h2 class="fw-bold mb-0 text-primary">856</h2>
                     <span class="text-muted small">Packages shipped</span>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-sm-6 col-md-3">
                 <div class="card stat-card shadow-sm bg-white border-start border-4 border-danger">
                     <span class="text-muted small">Warehouse Capacity</span>
                     <h2 class="fw-bold mb-1">88%</h2>
@@ -143,36 +187,38 @@
         </div>
 
         <div class="row g-4">
-            <div class="col-md-8">
+            <div class="col-xl-8">
                 <div class="card border-0 shadow-sm p-4 rounded-4 mb-4">
                     <h5 class="fw-bold mb-4">Ongoing Inbound Shipments</h5>
-                    <table class="table align-middle">
-                        <thead class="table-light">
-                            <tr>
-                                <th>Client</th>
-                                <th>Items</th>
-                                <th>Dock No.</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>TechStore NG</strong></td>
-                                <td>450 units</td>
-                                <td>Gate 4</td>
-                                <td><span class="badge bg-primary">Unloading</span></td>
-                                <td><button class="btn btn-sm btn-light border">Manage</button></td>
-                            </tr>
-                            <tr>
-                                <td><strong>FashionHub</strong></td>
-                                <td>1,200 units</td>
-                                <td>Gate 2</td>
-                                <td><span class="badge bg-warning text-dark">Awaiting Check</span></td>
-                                <td><button class="btn btn-sm btn-light border">Manage</button></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table class="table align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Client</th>
+                                    <th>Items</th>
+                                    <th>Dock No.</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>TechStore NG</strong></td>
+                                    <td>450 units</td>
+                                    <td>Gate 4</td>
+                                    <td><span class="badge bg-primary">Unloading</span></td>
+                                    <td><button class="btn btn-sm btn-light border">Manage</button></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>FashionHub</strong></td>
+                                    <td>1,200 units</td>
+                                    <td>Gate 2</td>
+                                    <td><span class="badge bg-warning text-dark">Awaiting Check</span></td>
+                                    <td><button class="btn btn-sm btn-light border">Manage</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
 
                 <div class="card border-0 shadow-sm p-4 rounded-4">
@@ -184,7 +230,7 @@
                 </div>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-xl-4">
                 <div class="card border-0 shadow-sm p-4 rounded-4 bg-white">
                     <h5 class="fw-bold mb-4">Billing Alerts</h5>
                     <div class="d-flex align-items-center mb-3">
@@ -222,8 +268,21 @@
         </div>
     </div>
 
+    <script>
+        const menuToggle = document.getElementById('menuToggle');
+        const menuClose = document.getElementById('menuClose');
+        const sidebar = document.getElementById('sidebarMenu');
+        const overlay = document.getElementById('overlay');
 
+        function toggleSidebar() {
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
 
+        menuToggle.addEventListener('click', toggleSidebar);
+        menuClose.addEventListener('click', toggleSidebar);
+        overlay.addEventListener('click', toggleSidebar);
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

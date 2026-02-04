@@ -14,9 +14,9 @@
             --sidebar-width: 260px; 
             --bg-light: #f4f7f6;
         }
-        body { font-family: 'Inter', sans-serif; background-color: var(--bg-light); }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-light); margin: 0; }
 
-        /* SCROLLABLE STAFF SIDEBAR */
+        /* SIDEBAR LOGIC */
         .sidebar { 
             width: var(--sidebar-width); 
             height: 100vh; 
@@ -26,12 +26,12 @@
             background-color: var(--admin-navy); 
             color: white; 
             padding-top: 20px; 
-            z-index: 1000; 
+            z-index: 1100; 
             overflow-y: auto;
             display: flex;
             flex-direction: column;
+            transition: all 0.3s ease;
         }
-
         .sidebar::-webkit-scrollbar { width: 5px; }
         .sidebar::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); }
         .sidebar::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); border-radius: 10px; }
@@ -63,7 +63,39 @@
             letter-spacing: 1px;
         }
 
-        .main-content { margin-left: var(--sidebar-width); padding: 30px; }
+        /* MAIN CONTENT AREA */
+        .main-content { 
+            margin-left: var(--sidebar-width); 
+            padding: 30px; 
+            transition: all 0.3s ease;
+        }
+
+        /* MOBILE COMPONENTS */
+        .mobile-header {
+            display: none;
+            background: var(--admin-navy);
+            color: white;
+            padding: 15px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1050;
+        }
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 1090;
+        }
+
+        @media (max-width: 992px) {
+            .sidebar { left: -260px; }
+            .sidebar.active { left: 0; }
+            .main-content { margin-left: 0; padding: 20px; }
+            .mobile-header { display: flex; justify-content: space-between; align-items: center; }
+            .sidebar-overlay.active { display: block; }
+        }
+
         .btn-wine { background: var(--primary-wine); color: white; border: none; }
         .btn-wine:hover { background: #87CEEB; color: white; }
 
@@ -78,9 +110,19 @@
 </head>
 <body>
 
-    <div class="sidebar">
-        <div class="sidebar-brand text-uppercase d-flex align-items-center">
-            <i class="bi bi-shield-lock-fill me-2 text-danger"></i> FRACISDARIS STAFF
+    <div class="mobile-header">
+        <span class="fw-bold small">PICKING & PACKING</span>
+        <button class="btn btn-outline-light btn-sm" id="menuToggle">
+            <i class="bi bi-list fs-4"></i>
+        </button>
+    </div>
+
+    <div class="sidebar-overlay" id="overlay"></div>
+
+    <div class="sidebar" id="sidebarMenu">
+        <div class="sidebar-brand text-uppercase d-flex justify-content-between align-items-center">
+            <span><i class="bi bi-shield-lock-fill me-2 text-danger"></i> FRACISDARIS STAFF</span>
+            <button class="btn btn-sm text-white d-lg-none" id="menuClose"><i class="bi bi-x-lg"></i></button>
         </div>
         <nav class="nav flex-column">
             <a class="nav-link" href="staff_dashboard.html"><i class="bi bi-grid-1x2"></i> Facility Health</a>
@@ -104,7 +146,7 @@
     </div>
 
     <div class="main-content">
-        <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
             <div>
                 <h3 class="fw-bold mb-0">Picking & Packing Queue</h3>
                 <p class="text-muted">Fulfillment station for outbound orders</p>
@@ -122,7 +164,7 @@
         </div>
 
         <div class="row g-4">
-            <div class="col-md-7">
+            <div class="col-lg-7">
                 <div class="card border-0 shadow-sm rounded-4 bg-white">
                     <div class="p-3 border-bottom d-flex justify-content-between align-items-center">
                         <h6 class="fw-bold mb-0">Active Pick Waves</h6>
@@ -166,7 +208,7 @@
                 </div>
             </div>
 
-            <div class="col-md-5">
+            <div class="col-lg-5">
                 <div class="card border-0 shadow-sm p-4 rounded-4 bg-white">
                     <h5 class="fw-bold mb-4">Station Monitoring</h5>
                     
@@ -211,30 +253,32 @@
                     <div class="alert alert-info py-2 small">
                         <i class="bi bi-info-circle me-2"></i>Path optimized: Start at Zone A, finish at Zone C.
                     </div>
-                    <table class="table table-sm align-middle small">
-                        <thead class="table-light">
-                            <tr>
-                                <th>Location</th>
-                                <th>SKU</th>
-                                <th>Qty</th>
-                                <th>Scan</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="fw-bold text-wine">A3-01</td>
-                                <td>SM-S24-U</td>
-                                <td>2</td>
-                                <td><i class="bi bi-check-circle-fill text-success"></i></td>
-                            </tr>
-                            <tr>
-                                <td class="fw-bold text-wine">C1-12</td>
-                                <td>LTH-BAG-01</td>
-                                <td>1</td>
-                                <td><button class="btn btn-xs btn-wine py-0 px-2" style="font-size: 0.6rem;">Scan</button></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table class="table table-sm align-middle small">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Location</th>
+                                    <th>SKU</th>
+                                    <th>Qty</th>
+                                    <th>Scan</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="fw-bold text-wine">A3-01</td>
+                                    <td>SM-S24-U</td>
+                                    <td>2</td>
+                                    <td><i class="bi bi-check-circle-fill text-success"></i></td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-bold text-wine">C1-12</td>
+                                    <td>LTH-BAG-01</td>
+                                    <td>1</td>
+                                    <td><button class="btn btn-xs btn-wine py-0 px-2" style="font-size: 0.6rem;">Scan</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -285,5 +329,21 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // MOBILE MENU LOGIC
+        const menuToggle = document.getElementById('menuToggle');
+        const menuClose = document.getElementById('menuClose');
+        const sidebar = document.getElementById('sidebarMenu');
+        const overlay = document.getElementById('overlay');
+
+        function toggleSidebar() {
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+
+        menuToggle.addEventListener('click', toggleSidebar);
+        menuClose.addEventListener('click', toggleSidebar);
+        overlay.addEventListener('click', toggleSidebar);
+    </script>
 </body>
 </html>

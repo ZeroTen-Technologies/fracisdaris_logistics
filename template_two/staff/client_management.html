@@ -14,9 +14,9 @@
             --sidebar-width: 260px; 
             --bg-light: #f4f7f6;
         }
-        body { font-family: 'Inter', sans-serif; background-color: var(--bg-light); }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-light); margin: 0; }
 
-        /* SCROLLABLE STAFF SIDEBAR */
+        /* SIDEBAR LOGIC */
         .sidebar { 
             width: var(--sidebar-width); 
             height: 100vh; 
@@ -26,12 +26,12 @@
             background-color: var(--admin-navy); 
             color: white; 
             padding-top: 20px; 
-            z-index: 1000; 
+            z-index: 1100; 
             overflow-y: auto;
             display: flex;
             flex-direction: column;
+            transition: all 0.3s ease;
         }
-
         .sidebar::-webkit-scrollbar { width: 5px; }
         .sidebar::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); }
         .sidebar::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); border-radius: 10px; }
@@ -63,7 +63,39 @@
             letter-spacing: 1px;
         }
 
-        .main-content { margin-left: var(--sidebar-width); padding: 30px; }
+        /* MAIN CONTENT AREA */
+        .main-content { 
+            margin-left: var(--sidebar-width); 
+            padding: 30px; 
+            transition: all 0.3s ease;
+        }
+
+        /* MOBILE OVERRIDES */
+        .mobile-header {
+            display: none;
+            background: var(--admin-navy);
+            color: white;
+            padding: 15px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1050;
+        }
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 1090;
+        }
+
+        @media (max-width: 992px) {
+            .sidebar { left: -260px; }
+            .sidebar.active { left: 0; }
+            .main-content { margin-left: 0; padding: 20px; }
+            .mobile-header { display: flex; justify-content: space-between; align-items: center; }
+            .sidebar-overlay.active { display: block; }
+        }
+
         .btn-wine { background: var(--primary-wine); color: white; border: none; }
         .btn-wine:hover { background: #87CEEB; color: white; }
 
@@ -74,9 +106,19 @@
 </head>
 <body>
 
-    <div class="sidebar">
-        <div class="sidebar-brand text-uppercase d-flex align-items-center">
-            <i class="bi bi-shield-lock-fill me-2 text-danger"></i> FRACISDARIS STAFF
+    <div class="mobile-header">
+        <span class="fw-bold small">CLIENT MANAGEMENT</span>
+        <button class="btn btn-outline-light btn-sm" id="menuToggle">
+            <i class="bi bi-list fs-4"></i>
+        </button>
+    </div>
+
+    <div class="sidebar-overlay" id="overlay"></div>
+
+    <div class="sidebar" id="sidebarMenu">
+        <div class="sidebar-brand text-uppercase d-flex justify-content-between align-items-center">
+            <span><i class="bi bi-shield-lock-fill me-2 text-danger"></i> FRACISDARIS STAFF</span>
+            <button class="btn btn-sm text-white d-lg-none" id="menuClose"><i class="bi bi-x-lg"></i></button>
         </div>
         <nav class="nav flex-column">
             <a class="nav-link" href="staff_dashboard.html"><i class="bi bi-grid-1x2"></i> Facility Health</a>
@@ -100,7 +142,7 @@
     </div>
 
     <div class="main-content">
-        <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
             <div>
                 <h3 class="fw-bold mb-0">Client Portfolio</h3>
                 <p class="text-muted">Manage accounts, billing, and storage agreements</p>
@@ -305,6 +347,21 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
     <script>
+        // MOBILE MENU LOGIC
+        const menuToggle = document.getElementById('menuToggle');
+        const menuClose = document.getElementById('menuClose');
+        const sidebar = document.getElementById('sidebarMenu');
+        const overlay = document.getElementById('overlay');
+
+        function toggleSidebar() {
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+
+        menuToggle.addEventListener('click', toggleSidebar);
+        menuClose.addEventListener('click', toggleSidebar);
+        overlay.addEventListener('click', toggleSidebar);
+
         // CLIENT FILTERING LOGIC
         const searchInput = document.getElementById('clientSearch');
         const statusFilter = document.getElementById('statusFilter');

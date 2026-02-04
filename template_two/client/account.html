@@ -15,7 +15,7 @@
         }
         body { font-family: 'Inter', sans-serif; background-color: var(--bg-light); }
 
-        /* UNIFORM SIDEBAR STYLES */
+        /* UNIFORM SIDEBAR STYLES WITH RESPONSIVE OVERRIDES */
         .sidebar { 
             width: var(--sidebar-width); 
             height: 100vh; 
@@ -25,7 +25,8 @@
             background-color: var(--primary-wine); 
             color: white; 
             padding-top: 20px; 
-            z-index: 1000; 
+            z-index: 1100; 
+            transition: all 0.3s ease;
         }
         .sidebar-brand {
             padding: 0 20px 30px;
@@ -49,8 +50,30 @@
             border-left: 4px solid white; 
         }
 
+        /* MOBILE MENU OVERLAY */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1050;
+        }
+
         /* CONTENT AREA */
-        .main-content { margin-left: var(--sidebar-width); padding: 30px; }
+        .main-content { margin-left: var(--sidebar-width); padding: 30px; transition: 0.3s; }
+        
+        /* TOP BAR FOR MOBILE */
+        .mobile-header {
+           display: none;
+            background: white;
+            padding: 15px 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            align-items: center;
+        }
+
         .btn-wine { background: var(--primary-wine); color: white; border: none; }
         .btn-wine:hover { background: #87CEEB; color: white; }
         
@@ -70,30 +93,58 @@
             justify-content: center;
             font-size: 2rem;
             color: var(--primary-wine);
+            flex-shrink: 0;
+        }
+
+        /* RESPONSIVE BREAKPOINTS */
+        @media (max-width: 991.98px) {
+            .sidebar { left: calc(-1 * var(--sidebar-width)); }
+            .sidebar.active { left: 0; }
+            .sidebar-overlay.active { display: block; }
+            .main-content { margin-left: 0; padding: 20px; }
+            .mobile-header { display: flex; justify-content: space-between; align-items: center; }
+            
+            /* Stack the profile header elements */
+            .profile-header .d-flex.justify-content-between {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                gap: 15px;
+            }
+            .profile-header .btn-sm { width: 100%; }
         }
     </style>
 </head>
 <body>
 
-    <div class="sidebar">
-        <div class="sidebar-brand text-uppercase">
-            <i class="bi bi-box-seam me-2"></i> Fracisdaris
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-brand text-uppercase d-flex justify-content-between align-items-center">
+            <span><i class="bi bi-box-seam me-2"></i> Fracisdaris</span>
+            <button class="btn text-white d-lg-none" onclick="toggleSidebar()"><i class="bi bi-x-lg"></i></button>
         </div>
         <nav class="nav flex-column">
             <a class="nav-link" href="dashboard.html"><i class="bi bi-speedometer2"></i> Overview</a>
             <a class="nav-link" href="inventory.html"><i class="bi bi-archive"></i> Inventory</a>
             <a class="nav-link" href="orders.html"><i class="bi bi-truck"></i> Orders</a>
             <a class="nav-link" href="reports.html"><i class="bi bi-bar-chart"></i> Reports</a>
-            <a class="nav-link" href="billing.html"><i class="bi bi-credit-card"></i> Transactions</a>
+            <a class="nav-link" href="transaction.html"><i class="bi bi-credit-card"></i> Transactions</a>
             <hr class="mx-3 opacity-25">
             <a class="nav-link active" href="account.html"><i class="bi bi-person-gear"></i> Account</a>
             <a class="nav-link" href="support.html"><i class="bi bi-headset"></i> Support</a>
-            <a class="nav-link text-danger mt-5" href="login.html"><i class="bi bi-box-arrow-left"></i> Logout</a>
+            <a class="nav-link text-danger mt-md-5" href="login.html"><i class="bi bi-box-arrow-left"></i> Logout</a>
         </nav>
     </div>
+            <div class="mobile-header">
+                <button class="btn btn-outline-primary btn-sm" onclick="toggleSidebar()">
+                    <i class="bi bi-list fs-4"></i>
+                </button>
+                <h5 class="mb-0 fw-bold text-primary">Account</h5>
+            </div>
+        <div class="main-content">
+        
 
-    <div class="main-content">
-        <h3 class="fw-bold mb-4">Account Management</h3>
+        <h3 class="fw-bold mb-4 d-none d-md-block">Account Management</h3>
 
         <div class="profile-header mb-4 shadow-sm">
             <div class="d-flex align-items-center justify-content-between mb-4">
@@ -103,7 +154,7 @@
                     </div>
                     <div>
                         <h5 class="fw-bold mb-0">TechStore Nigeria</h5>
-                        <p class="text-muted small mb-0">Partnered since October 2025</p>
+                        <p class="text-muted small mb-0">Partnered since Oct 2025</p>
                     </div>
                 </div>
                 <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#editProfileModal">
@@ -114,22 +165,22 @@
             <div class="row g-3">
                 <div class="col-md-6">
                     <label class="small text-muted d-block">Primary Address</label>
-                    <p class="fw-semibold">12, Independence Way, Abuja.</p>
+                    <p class="fw-semibold mb-2 mb-md-0">12, Independence Way, Abuja.</p>
                 </div>
                 <div class="col-md-6">
                     <label class="small text-muted d-block">Contact Person</label>
-                    <p class="fw-semibold">John Doe (john@techstore.ng)</p>
+                    <p class="fw-semibold mb-0">John Doe (john@techstore.ng)</p>
                 </div>
             </div>
         </div>
 
-        <div class="card border-0 shadow-sm p-4 rounded-4">
-            <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="card border-0 shadow-sm p-3 p-md-4 rounded-4">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
                 <div>
                     <h5 class="fw-bold mb-0">User Management</h5>
-                    <p class="text-muted small">Control team access to your logistics dashboard</p>
+                    <p class="text-muted small mb-0">Control team access to your dashboard</p>
                 </div>
-                <button class="btn btn-wine btn-sm px-3" data-bs-toggle="modal" data-bs-target="#addUserModal">
+                <button class="btn btn-wine btn-sm px-3 py-2" data-bs-toggle="modal" data-bs-target="#addUserModal">
                     <i class="bi bi-person-plus me-1"></i> Add User
                 </button>
             </div>
@@ -140,7 +191,7 @@
                         <tr>
                             <th>Name</th>
                             <th>Role</th>
-                            <th>Status</th>
+                            <th class="d-none d-sm-table-cell">Status</th>
                             <th class="text-end">Action</th>
                         </tr>
                     </thead>
@@ -148,12 +199,12 @@
                         <tr>
                             <td>
                                 <div class="d-flex align-items-center">
-                                    <div class="bg-light p-2 rounded-circle me-2 text-center" style="width: 35px; height: 35px; line-height: 20px;">SJ</div>
-                                    Sarah James
+                                    <div class="bg-light p-2 rounded-circle me-2 text-center d-none d-sm-block" style="width: 35px; height: 35px; line-height: 20px;">SJ</div>
+                                    <span class="small fw-semibold">Sarah James</span>
                                 </div>
                             </td>
-                            <td><span class="text-muted">Manager</span></td>
-                            <td><span class="badge bg-success-subtle text-success">Active</span></td>
+                            <td><span class="text-muted small">Manager</span></td>
+                            <td class="d-none d-sm-table-cell"><span class="badge bg-success-subtle text-success">Active</span></td>
                             <td class="text-end">
                                 <button class="btn btn-sm btn-light border" data-bs-toggle="modal" data-bs-target="#editUserModal">Edit</button>
                             </td>
@@ -161,12 +212,12 @@
                         <tr>
                             <td>
                                 <div class="d-flex align-items-center">
-                                    <div class="bg-light p-2 rounded-circle me-2 text-center" style="width: 35px; height: 35px; line-height: 20px;">MO</div>
-                                    Mike Obi
+                                    <div class="bg-light p-2 rounded-circle me-2 text-center d-none d-sm-block" style="width: 35px; height: 35px; line-height: 20px;">MO</div>
+                                    <span class="small fw-semibold">Mike Obi</span>
                                 </div>
                             </td>
-                            <td><span class="text-muted">View-Only</span></td>
-                            <td><span class="badge bg-secondary-subtle text-secondary">Inactive</span></td>
+                            <td><span class="text-muted small">View-Only</span></td>
+                            <td class="d-none d-sm-table-cell"><span class="badge bg-secondary-subtle text-secondary">Inactive</span></td>
                             <td class="text-end">
                                 <button class="btn btn-sm btn-light border" data-bs-toggle="modal" data-bs-target="#editUserModal">Edit</button>
                             </td>
@@ -178,7 +229,7 @@
     </div>
 
     <div class="modal fade" id="addUserModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog modal-dialog-centered mx-auto" style="max-width: 90%; width: 450px;">
             <div class="modal-content p-4 rounded-4 border-0">
                 <div class="modal-header border-0 p-0 mb-3">
                     <h5 class="fw-bold">Add Team Member</h5>
@@ -202,7 +253,7 @@
     </div>
 
     <div class="modal fade" id="editUserModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog modal-dialog-centered mx-auto" style="max-width: 90%; width: 450px;">
             <div class="modal-content p-4 rounded-4 border-0 shadow">
                 <div class="modal-header border-0 p-0 mb-3">
                     <h5 class="fw-bold">Modify User Access</h5>
@@ -230,7 +281,7 @@
     </div>
 
     <div class="modal fade" id="editProfileModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog modal-dialog-centered mx-auto" style="max-width: 90%; width: 450px;">
             <div class="modal-content p-4 rounded-4 border-0 shadow">
                 <div class="modal-header border-0 p-0 mb-3">
                     <h5 class="fw-bold">Edit Company Profile</h5>
@@ -241,7 +292,7 @@
                         <div class="avatar-placeholder mx-auto mb-2" style="width: 60px; height: 60px; font-size: 1.5rem;">
                             <i class="bi bi-camera"></i>
                         </div>
-                        <button class="btn btn-sm btn-link text-wine p-0">Change Logo</button>
+                        <button class="btn btn-sm btn-link text-decoration-none p-0">Change Logo</button>
                     </div>
                     <div class="mb-3">
                         <label class="small fw-bold">Company Name</label>
@@ -261,6 +312,12 @@
         </div>
     </div>
 
+    <script>
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('active');
+            document.getElementById('sidebarOverlay').classList.toggle('active');
+        }
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -9,13 +9,13 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <style>
         :root { 
-             --primary-wine: #3399FF;
+            --primary-wine: #3399FF;
             --sidebar-width: 260px; 
             --bg-light: #f8f9fa;
         }
-        body { font-family: 'Inter', sans-serif; background-color: var(--bg-light); }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-light); margin: 0; }
 
-        /* UNIFORM SIDEBAR STYLES */
+        /* SIDEBAR BASE */
         .sidebar { 
             width: var(--sidebar-width); 
             height: 100vh; 
@@ -25,7 +25,8 @@
             background-color: var(--primary-wine); 
             color: white; 
             padding-top: 20px; 
-            z-index: 1000; 
+            z-index: 1100; 
+            transition: all 0.3s ease;
         }
         .sidebar-brand {
             padding: 0 20px 30px;
@@ -50,29 +51,75 @@
         }
 
         /* CONTENT AREA */
-        .main-content { margin-left: var(--sidebar-width); padding: 30px; }
-        .btn-wine { background: var(--primary-wine); color: white; border: none; }
-        .btn-wine:hover { background: #87CEEB; color: white; }
-        
+        .main-content { 
+            margin-left: var(--sidebar-width); 
+            padding: 30px; 
+            transition: all 0.3s ease;
+        }
+
+        /* MOBILE HEADER (Only visible < 992px) */
+        .mobile-top-nav {
+            display: none;
+            background: white;
+            padding: 15px 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            align-items: center;
+        }
+
+        /* OVERLAY */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1050;
+        }
+
+        /* RESPONSIVE BREAKPOINT */
+        @media (max-width: 992px) {
+            .sidebar { left: -260px; } /* Hide sidebar */
+            .sidebar.active { left: 0; } /* Show sidebar */
+            .main-content { margin-left: 0; padding: 20px; }
+            .mobile-top-nav { display: flex; justify-content: space-between; align-items: center; }
+            .sidebar-overlay.active { display: block; }
+        }
+
+        .btn-wine { background: var(--primary-wine); color: white; border: none; transition: 0.2s; }
+        .btn-wine:hover { background: #267acc; color: white; transform: translateY(-1px); }
         .support-box { border: none; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
         
-        .chat-bubble { padding: 10px 15px; border-radius: 15px; margin-bottom: 10px; max-width: 80%; }
-        .chat-left { background: #f1f1f1; align-self: flex-start; }
-        .chat-right { background: var(--primary-wine); color: white; align-self: flex-end; }
+        /* CHAT BUBBLES */
+        .chat-bubble { padding: 12px 18px; border-radius: 18px; margin-bottom: 15px; max-width: 85%; font-size: 0.95rem; }
+        .chat-left { background: #f1f3f5; align-self: flex-start; border-bottom-left-radius: 4px; }
+        .chat-right { background: var(--primary-wine); color: white; align-self: flex-end; border-bottom-right-radius: 4px; }
+        
+        .priority-dot { height: 10px; width: 10px; border-radius: 50%; display: inline-block; margin-right: 5px; }
+        .priority-urgent { background-color: #dc3545; }
+        .priority-low { background-color: #198754; }
     </style>
 </head>
 <body>
 
-    <div class="sidebar">
-        <div class="sidebar-brand text-uppercase">
-            <i class="bi bi-box-seam me-2"></i> Fracisdaris
+    <div class="mobile-top-nav">
+        <button class="btn btn-outline-primary btn-sm" id="toggleSidebar">
+            <i class="bi bi-list fs-4"></i>
+        </button>
+        <span class="fw-bold text-primary">Support</span>
+    </div>
+
+    <div class="sidebar-overlay" id="overlay"></div>
+
+    <div class="sidebar" id="sidebarMenu">
+        <div class="sidebar-brand text-uppercase d-flex justify-content-between align-items-center">
+            <span><i class="bi bi-box-seam me-2"></i> Fracisdaris</span>
+            <button class="btn btn-sm text-white d-lg-none" id="closeSidebar"><i class="bi bi-x-lg"></i></button>
         </div>
         <nav class="nav flex-column">
             <a class="nav-link" href="dashboard.html"><i class="bi bi-speedometer2"></i> Overview</a>
             <a class="nav-link" href="inventory.html"><i class="bi bi-archive"></i> Inventory</a>
             <a class="nav-link" href="orders.html"><i class="bi bi-truck"></i> Orders</a>
             <a class="nav-link" href="reports.html"><i class="bi bi-bar-chart"></i> Reports</a>
-            <a class="nav-link" href="billing.html"><i class="bi bi-credit-card"></i> Transactions</a>
+            <a class="nav-link" href="transaction.html"><i class="bi bi-credit-card"></i> Transactions</a>
             <hr class="mx-3 opacity-25">
             <a class="nav-link" href="account.html"><i class="bi bi-person-gear"></i> Account</a>
             <a class="nav-link active" href="support.html"><i class="bi bi-headset"></i> Support</a>
@@ -81,53 +128,94 @@
     </div>
 
     <div class="main-content">
-        <h3 class="fw-bold mb-4">Support & Contact</h3>
+        <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+            <h3 class="fw-bold mb-0">Support Center</h3>
+            <span class="badge bg-white text-dark border p-2"><i class="bi bi-clock me-2"></i>Avg. Response: 24 mins</span>
+        </div>
 
         <div class="row g-4 mb-5">
-            <div class="col-md-7">
+            <div class="col-lg-7 col-md-12">
                 <div class="card support-box p-4 bg-white">
-                    <h5 class="fw-bold mb-4">Submit a Support Ticket</h5>
+                    <h5 class="fw-bold mb-4">Create New Ticket</h5>
                     <form>
                         <div class="mb-3">
-                            <label class="small">Subject</label>
-                            <input type="text" class="form-control" placeholder="e.g. Missing Stock Item">
+                            <label class="small fw-bold mb-1">Subject</label>
+                            <input type="text" class="form-control" placeholder="Brief summary of the issue">
                         </div>
-                        <div class="mb-3">
-                            <label class="small">Priority</label>
-                            <select class="form-select">
-                                <option>Low</option>
-                                <option>Urgent</option>
-                            </select>
+                        <div class="row mb-3">
+                            <div class="col-md-6 mb-3 mb-md-0">
+                                <label class="small fw-bold mb-1">Priority</label>
+                                <select class="form-select">
+                                    <option>Low</option>
+                                    <option>Medium</option>
+                                    <option class="text-danger">Urgent</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="small fw-bold mb-1">Category</label>
+                                <select class="form-select">
+                                    <option>Inventory Issue</option>
+                                    <option>Billing & Payments</option>
+                                    <option>Delivery Delay</option>
+                                    <option>Other</option>
+                                </select>
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <label class="small">Description</label>
-                            <textarea class="form-control" rows="4"></textarea>
+                        <div class="mb-4">
+                            <label class="small fw-bold mb-1">Detailed Description</label>
+                            <textarea class="form-control" rows="4" placeholder="Please provide as much detail as possible..."></textarea>
                         </div>
-                        <button type="button" class="btn btn-wine w-100 py-3" data-bs-toggle="modal" data-bs-target="#ticketSuccessModal">Submit Ticket</button>
+                        <button type="button" class="btn btn-wine w-100 py-3 fw-bold shadow-sm" data-bs-toggle="modal" data-bs-target="#ticketSuccessModal">
+                            <i class="bi bi-plus-lg me-2"></i>Submit Support Request
+                        </button>
                     </form>
                 </div>
             </div>
 
-            <div class="col-md-5">
-                <div class="card support-box p-4 bg-white border-start border-4 border-danger">
-                    <h5 class="fw-bold mb-4 text-danger">Dedicated Team</h5>
-                    <div class="mb-4">
-                        <p class="small text-muted mb-0">Account Manager</p>
-                        <h6 class="fw-bold">Mr. Onyeka Okaro</h6>
-                        <p class="small"><i class="bi bi-telephone text-danger"></i> 07015541128</p>
+            <div class="col-lg-5 col-md-12">
+                <div class="card support-box p-4 bg-white border-start border-4 border-primary">
+                    <h5 class="fw-bold mb-4">Direct Contact</h5>
+                    
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="flex-shrink-0">
+                            <div class="bg-light rounded-circle p-3 text-primary">
+                                <i class="bi bi-person-badge fs-3"></i>
+                            </div>
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <p class="small text-muted mb-0">Dedicated Account Manager</p>
+                            <h6 class="fw-bold mb-1">Mr. Onyeka Okaro</h6>
+                            <a href="tel:07015541128" class="btn btn-sm btn-outline-primary rounded-pill">
+                                <i class="bi bi-telephone me-1"></i> Call Now
+                            </a>
+                        </div>
                     </div>
-                    <hr>
-                    <div class="mb-4">
-                        <p class="small text-muted mb-0">Operations Team</p>
-                        <h6 class="fw-bold">Lagos Warehouse Ops</h6>
-                        <p class="small"><i class="bi bi-envelope text-danger"></i> ops@fracisdaris.com</p>
+                    
+                    <hr class="opacity-10">
+                    
+                    <div class="d-flex align-items-center">
+                        <div class="flex-shrink-0">
+                            <div class="bg-light rounded-circle p-3 text-success">
+                                <i class="bi bi-whatsapp fs-3"></i>
+                            </div>
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <p class="small text-muted mb-0">Operations Team</p>
+                            <h6 class="fw-bold mb-1">Live Warehouse Chat</h6>
+                            <p class="small mb-0 text-success"><i class="bi bi-dot"></i> Online (8 AM - 6 PM)</p>
+                        </div>
                     </div>
+                </div>
+
+                <div class="card support-box p-4 bg-white mt-4">
+                    <h6 class="fw-bold"><i class="bi bi-info-circle me-2"></i>Help Tip</h6>
+                    <p class="small text-muted mb-0">Check the <a href="#" class="text-decoration-none">FAQ section</a> for instant answers to common inventory questions.</p>
                 </div>
             </div>
         </div>
 
         <div class="card border-0 shadow-sm rounded-4 p-4">
-            <h5 class="fw-bold mb-4">Recent Support Tickets</h5>
+            <h5 class="fw-bold mb-4">Recent Support History</h5>
             <div class="table-responsive">
                 <table class="table align-middle">
                     <thead class="table-light">
@@ -143,16 +231,16 @@
                         <tr>
                             <td><strong>#TK-882</strong></td>
                             <td>Warehouse accessibility query</td>
-                            <td>Jan 24, 2026</td>
-                            <td><span class="badge bg-success">Resolved</span></td>
-                            <td><button class="btn btn-sm btn-light border" data-bs-toggle="modal" data-bs-target="#viewThreadModal">View Thread</button></td>
+                            <td>Feb 01, 2026</td>
+                            <td><span class="badge rounded-pill bg-success-subtle text-success border-0">Resolved</span></td>
+                            <td><button class="btn btn-sm btn-light border px-3" data-bs-toggle="modal" data-bs-target="#viewThreadModal">View</button></td>
                         </tr>
                         <tr>
                             <td><strong>#TK-901</strong></td>
                             <td>SKU-4402 packaging error</td>
                             <td>Today</td>
-                            <td><span class="badge bg-warning text-dark">Processing</span></td>
-                            <td><button class="btn btn-sm btn-light border" data-bs-toggle="modal" data-bs-target="#viewThreadModal">View Thread</button></td>
+                            <td><span class="badge rounded-pill bg-warning-subtle text-warning border border-warning-subtle">Processing</span></td>
+                            <td><button class="btn btn-sm btn-light border px-3" data-bs-toggle="modal" data-bs-target="#viewThreadModal">View</button></td>
                         </tr>
                     </tbody>
                 </table>
@@ -163,41 +251,59 @@
     <div class="modal fade" id="ticketSuccessModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content text-center p-5 border-0 rounded-4">
-                <i class="bi bi-check-circle text-success display-4 mb-3"></i>
-                <h5>Ticket Submitted!</h5>
-                <p class="text-muted small">Your account manager will contact you within 2 hours.</p>
-                <button class="btn btn-wine px-5" data-bs-dismiss="modal">OK</button>
+                <i class="bi bi-check-circle-fill text-success display-3 mb-3"></i>
+                <h4 class="fw-bold">Request Received</h4>
+                <p class="text-muted">Ticket #TK-902 has been created. Mr. Okaro will contact you within 2 hours.</p>
+                <button class="btn btn-wine px-5 py-2 mt-3" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
 
     <div class="modal fade" id="viewThreadModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content border-0 rounded-4">
-                <div class="modal-header border-0 bg-light rounded-top-4">
-                    <h5 class="fw-bold modal-title">Ticket Conversation #TK-901</h5>
+            <div class="modal-content border-0 rounded-4 overflow-hidden">
+                <div class="modal-header bg-light border-0 px-4 py-3">
+                    <div>
+                        <h5 class="fw-bold modal-title mb-0">Ticket #TK-901</h5>
+                        <small class="text-muted">Regarding: SKU-4402 packaging error</small>
+                    </div>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <div class="modal-body p-4 d-flex flex-column">
+                <div class="modal-body p-4 d-flex flex-column" style="height: 400px; overflow-y: auto;">
                     <div class="chat-bubble chat-right">
-                        <small class="d-block text-white-50">You - 10:30 AM</small>
+                        <small class="d-block text-white-50 mb-1">You • 10:30 AM</small>
                         Hello, we noticed the packaging for SKU-4402 is incorrect. It should be double-wrapped.
                     </div>
                     <div class="chat-bubble chat-left">
-                        <small class="d-block text-muted">Operations - 11:15 AM</small>
+                        <small class="d-block text-muted mb-1">Operations • 11:15 AM</small>
                         Noted. We are updating the packaging protocol for this SKU immediately. Our team is currently re-wrapping the batch.
                     </div>
                 </div>
-                <div class="modal-footer border-0 p-3 bg-light rounded-bottom-4">
+                <div class="modal-footer border-0 p-3 bg-white">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Type a reply...">
-                        <button class="btn btn-wine"><i class="bi bi-send"></i></button>
+                        <input type="text" class="form-control border-light-subtle" placeholder="Type your reply here...">
+                        <button class="btn btn-wine"><i class="bi bi-send-fill"></i></button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <script>
+        const btnToggle = document.getElementById('toggleSidebar');
+        const btnClose = document.getElementById('closeSidebar');
+        const sidebar = document.getElementById('sidebarMenu');
+        const overlay = document.getElementById('overlay');
+
+        function toggleMenu() {
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+
+        btnToggle.addEventListener('click', toggleMenu);
+        btnClose.addEventListener('click', toggleMenu);
+        overlay.addEventListener('click', toggleMenu);
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

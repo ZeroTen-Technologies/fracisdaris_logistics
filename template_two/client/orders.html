@@ -13,7 +13,7 @@
             --sidebar-width: 260px; 
             --bg-light: #f8f9fa;
         }
-        body { font-family: 'Inter', sans-serif; background-color: var(--bg-light); }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-light); overflow-x: hidden; }
 
         /* SIDEBAR STYLES */
         .sidebar { 
@@ -24,7 +24,8 @@
             background-color: var(--primary-wine); 
             color: white; 
             padding-top: 20px; 
-            z-index: 1000; 
+            z-index: 1050; 
+            transition: all 0.3s ease;
         }
         .sidebar-brand { padding: 0 20px 30px; font-weight: 700; font-size: 1.2rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
         .nav-link { color: rgba(255,255,255,0.8); padding: 12px 25px; display: flex; align-items: center; text-decoration: none; transition: 0.3s; border-left: 4px solid transparent; }
@@ -32,50 +33,68 @@
         .nav-link:hover, .nav-link.active { color: white; background: rgba(255,255,255,0.1); border-left: 4px solid white; }
 
         /* CONTENT AREA */
-        .main-content { margin-left: var(--sidebar-width); padding: 30px; }
+        .main-content { margin-left: var(--sidebar-width); padding: 30px; transition: 0.3s; }
         .btn-wine { background: var(--primary-wine); color: white; border: none; }
         .btn-wine:hover { background: #267acc; color: white; }
         
         /* QUOTE CARD STYLES */
         .quote-card {
             border: none;
-            border-left: 5px solid #ffc107; /* Warning yellow for pending */
+            border-left: 5px solid #ffc107; 
             transition: transform 0.2s;
         }
         .quote-card:hover { transform: translateY(-5px); }
         .status-badge { font-weight: 600; padding: 6px 12px; border-radius: 50px; }
         
-        .pulse-orange {
-            animation: pulse-red 2s infinite;
-            border-radius: 50%;
+        /* TIMELINE STYLES FOR MODAL */
+        .timeline { position: relative; padding: 20px 0; list-style: none; }
+        .timeline:before { content: ''; position: absolute; top: 0; bottom: 0; width: 2px; background: #e9ecef; left: 20px; }
+        .timeline-item { position: relative; margin-bottom: 20px; padding-left: 45px; }
+        .timeline-marker { position: absolute; left: 12px; width: 16px; height: 16px; border-radius: 50%; background: var(--primary-wine); border: 3px solid white; box-shadow: 0 0 0 2px var(--primary-wine); }
+        
+        /* MOBILE RESPONSIVENESS */
+        @media (max-width: 991.98px) {
+            .sidebar { left: -260px; }
+            .sidebar.active { left: 0; }
+            .main-content { margin-left: 0; padding: 15px; }
+            .mobile-header { display: flex !important; background: white; padding: 15px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); align-items: center; }
         }
-        @keyframes pulse-red {
-            0% { box-shadow: 0 0 0 0 rgba(255, 193, 7, 0.7); }
-            70% { box-shadow: 0 0 0 10px rgba(255, 193, 7, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(255, 193, 7, 0); }
-        }
+
+        .mobile-header { display: none; justify-content:space-between; }
+        .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1040; }
+        .overlay.active { display: block; }
     </style>
 </head>
 <body>
 
-    <div class="sidebar">
-        <div class="sidebar-brand text-uppercase">
-            <i class="bi bi-box-seam me-2"></i> Fracisdaris
+    <div class="overlay" id="sidebarOverlay"></div>
+
+    <div class="sidebar" id="mainSidebar">
+        <div class="sidebar-brand text-uppercase d-flex justify-content-between align-items-center">
+            <span><i class="bi bi-box-seam me-2"></i> Fracisdaris</span>
+            <button class="btn btn-sm text-white d-lg-none" onclick="toggleSidebar()"><i class="bi bi-x-lg"></i></button>
         </div>
         <nav class="nav flex-column">
             <a class="nav-link" href="dashboard.html"><i class="bi bi-speedometer2"></i> Overview</a>
             <a class="nav-link" href="inventory.html"><i class="bi bi-archive"></i> Inventory</a>
             <a class="nav-link active" href="orders.html"><i class="bi bi-truck"></i> Orders</a>
             <a class="nav-link" href="reports.html"><i class="bi bi-bar-chart"></i> Reports</a>
-            <a class="nav-link" href="billing.html"><i class="bi bi-credit-card"></i> Transactions</a>
+            <a class="nav-link" href="transaction.html"><i class="bi bi-credit-card"></i> Transactions</a>
             <hr class="mx-3 opacity-25">
             <a class="nav-link" href="account.html"><i class="bi bi-person-gear"></i> Account</a>
             <a class="nav-link" href="support.html"><i class="bi bi-headset"></i> Support</a>
             <a class="nav-link text-danger mt-5" href="login.html"><i class="bi bi-box-arrow-left"></i> Logout</a>
         </nav>
     </div>
+        <div class="mobile-header">
+            <button class="btn btn-outline-primary btn-sm" onclick="toggleSidebar()">
+                    <i class="bi bi-list fs-4"></i>
+                </button>
+            <h5 class="mb-0 fw-bold">Order Management</h5>
+        </div>
 
     <div class="main-content">
+
         <div class="mb-5">
             <div class="d-flex align-items-center mb-3">
                 <h5 class="fw-bold mb-0 me-2">Pending Quotations</h5>
@@ -93,7 +112,6 @@
                         </div>
                         <h6 class="fw-bold mb-1">Standard Road Delivery</h6>
                         <p class="small text-muted mb-3">Weight: 45kg | Dist: 120km<br>To: Lekki Phase 1, Lagos</p>
-                        
                         <div class="d-grid gap-2">
                             <a href="tel:+2348000000000" class="btn btn-sm btn-outline-primary">
                                 <i class="bi bi-telephone-outbound me-2"></i>Call Admin for Price
@@ -112,7 +130,6 @@
                         </div>
                         <h6 class="fw-bold mb-1">Fragile Handling</h6>
                         <p class="small text-muted mb-3">Weight: 12kg | Dist: 15km<br>To: Ikeja, G.R.A</p>
-                        
                         <div class="d-grid gap-2">
                             <a href="tel:+2348000000000" class="btn btn-sm btn-outline-primary">
                                 <i class="bi bi-telephone-outbound me-2"></i>Call Admin for Price
@@ -125,8 +142,8 @@
 
         <hr class="my-4">
 
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h3 class="fw-bold">Active Orders</h3>
+        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+            <h3 class="fw-bold mb-0">Active Orders</h3>
             <button class="btn btn-wine" data-bs-toggle="modal" data-bs-target="#newOrderModal">
                 <i class="bi bi-plus-lg me-2"></i>Request New Quotation
             </button>
@@ -185,7 +202,6 @@
                     </h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                
                 <div class="modal-body p-4">
                     <form id="homepageOrderForm">
                         <div class="mb-4">
@@ -210,19 +226,18 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="mb-4">
                             <h6 class="text-uppercase fw-bold mb-3" style="font-size: 0.8rem; letter-spacing: 1px; color: var(--primary-wine);">2. Contact Information</h6>
                             <div class="row g-3">
                                 <div class="col-12">
-                                <div class="border-2 border-dashed rounded-4 p-3 text-center bg-light position-relative" style="border: 2px dashed #ccc;">
-                                    <input type="file" id="itemImage" class="position-absolute opacity-0 w-100 h-100 top-0 start-0" style="cursor: pointer;" accept="image/*">
-                                    <div id="uploadPreview">
-                                        <i class="bi bi-camera fs-3 text-muted"></i>
-                                        <p class="small mb-0 text-muted">Upload Item Photo (Optional)</p>
+                                    <div class="border-2 border-dashed rounded-4 p-3 text-center bg-light position-relative" style="border: 2px dashed #ccc;">
+                                        <input type="file" id="itemImage" class="position-absolute opacity-0 w-100 h-100 top-0 start-0" style="cursor: pointer;" accept="image/*">
+                                        <div id="uploadPreview">
+                                            <i class="bi bi-camera fs-3 text-muted"></i>
+                                            <p class="small mb-0 text-muted">Upload Item Photo (Optional)</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
                                 <div class="col-md-6">
                                     <label class="small fw-semibold">Recipient Full Name</label>
                                     <input type="text" class="form-control bg-light border-0" id="recipientName" placeholder="Recipient Name" required>
@@ -237,12 +252,9 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="p-3 rounded-4 bg-light border text-center">
                             <p class="small text-muted mb-3">After submission, the admin will review your details and provide a final price via your dashboard or phone.</p>
-                            <button type="submit" class="btn btn-wine rounded-pill px-5 fw-bold">
-                                Submit Quotation Request
-                            </button>
+                            <button type="submit" class="btn btn-wine rounded-pill px-5 fw-bold">Submit Quotation Request</button>
                         </div>
                     </form>
                 </div>
@@ -268,10 +280,25 @@
                             <h6 class="fw-bold">Feb 02, 2026</h6>
                         </div>
                     </div>
-                    <div class="mb-4">
-                        <p class="small text-muted mb-1">Customer Details</p>
+                    
+                    <h6 class="fw-bold small text-uppercase mb-3" style="letter-spacing: 1px;">Shipment Timeline</h6>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-marker"></div>
+                            <p class="mb-0 small fw-bold">Order Received</p>
+                            <p class="text-muted small">Package details verified by system.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-marker"></div>
+                            <p class="mb-0 small fw-bold">In Processing</p>
+                            <p class="text-muted small">Allocating driver and logistics route.</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 p-3 bg-light rounded-3">
+                        <p class="small text-muted mb-1">Recipient</p>
                         <p class="mb-0 fw-bold" id="modalCustomerName">--</p>
-                        <p class="small">Lagos, Nigeria</p>
+                        <p class="small mb-0">Lagos, Nigeria</p>
                     </div>
                 </div>
                 <div class="modal-footer border-0">
@@ -283,21 +310,25 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        // Sidebar Toggle for Mobile
+        function toggleSidebar() {
+            document.getElementById('mainSidebar').classList.toggle('active');
+            document.getElementById('sidebarOverlay').classList.toggle('active');
+        }
+        document.getElementById('sidebarOverlay').addEventListener('click', toggleSidebar);
+
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.getElementById('homepageOrderForm');
             const container = document.getElementById('quotationsContainer');
 
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
-
-                // 1. Capture Form Values
                 const service = document.getElementById('shipType').value;
                 const weight = document.getElementById('calcWeight').value;
                 const distance = document.getElementById('calcDistance').value;
                 const address = document.getElementById('deliveryAddress').value;
                 const ref = 'REF: #QT-' + Math.floor(1000 + Math.random() * 9000);
 
-                // 2. Create New Card HTML
                 const newCard = `
                     <div class="col-md-6 col-lg-4">
                         <div class="card quote-card shadow-sm p-3">
@@ -309,20 +340,15 @@
                             </div>
                             <h6 class="fw-bold mb-1">${service}</h6>
                             <p class="small text-muted mb-3">Weight: ${weight}kg | Dist: ${distance}km<br>To: ${address}</p>
-                            
                             <div class="d-grid gap-2">
                                 <a href="tel:+2348000000000" class="btn btn-sm btn-outline-primary">
                                     <i class="bi bi-telephone-outbound me-2"></i>Call Admin for Price
                                 </a>
                             </div>
                         </div>
-                    </div>
-                `;
+                    </div>`;
 
-                // 3. Add to Container
                 container.insertAdjacentHTML('afterbegin', newCard);
-
-                // 4. Reset and Close
                 form.reset();
                 bootstrap.Modal.getInstance(document.getElementById('newOrderModal')).hide();
                 alert('Quotation Sent! Your request is now visible in the Pending Quotations section.');
